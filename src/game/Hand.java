@@ -14,7 +14,11 @@ import java.util.Set;
 public class Hand {
 	private Set<Card> cards; 
 	
+	/**
+	 * Creates a new Hand from a given set of cards
+	 * @param cards
+	 */
 	public Hand(Set<Card> cards){
-		
+		this.cards = cards;
 	}
 }
