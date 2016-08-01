@@ -7,5 +7,17 @@ package game;
  */
 
 public class Player {
+	// added location
+	private Location playerLocation;
 
+	public Location getLocation(){
+		return this.playerLocation;
+	}
+	
+	public void setLocation(Location location){
+		this.playerLocation = location;
+	}
+		
+	
+	
 }
