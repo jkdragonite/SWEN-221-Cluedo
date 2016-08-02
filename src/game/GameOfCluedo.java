@@ -41,6 +41,9 @@ public class GameOfCluedo {
 		return players.get(playerNum -1);
 	}
 	
+	public List<Player> getPlayers(){
+		return this.players;
+	}
 	
 	public ArrayList<Card> getSolution(){
 		return solution;
