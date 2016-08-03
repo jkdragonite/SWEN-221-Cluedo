@@ -7,6 +7,7 @@ public class Board {
 	
 	private char[][] currentBoardArray;
 	private char[][] cleanBoard;
+//	private Square[][] boardSquares;
 	  
 	// using characters just to get started, will change to square instances later
 	Board(){

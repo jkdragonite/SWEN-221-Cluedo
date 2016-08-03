@@ -47,4 +47,12 @@ public class Room extends Square {
 	public GameOfCluedo.Weapon containsWeapon(){
 		return weapon;
 	}
+	
+	public void setWeapon(GameOfCluedo.Weapon weapon){
+		this.weapon = weapon;
+	}
+	
+	public String getName(){
+		return this.roomName;
+	}
 }
