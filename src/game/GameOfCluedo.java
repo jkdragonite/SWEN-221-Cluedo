@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import ui.Board;
 import ui.TextClient;
@@ -11,6 +12,7 @@ import ui.TextClient;
 public class GameOfCluedo {
 	//private Board board;
 	private List<Player> players;
+	private int currentPlayer;
 	private ArrayList<Card> solution;
 	private TextClient ui;
 	
@@ -26,6 +28,7 @@ public class GameOfCluedo {
 	public GameOfCluedo(){
 		//board = new Board();
 		players = new ArrayList<Player>();
+		currentPlayer = 1;
 		solution = new ArrayList<Card>();
 		ui = new TextClient();
 	}
@@ -125,7 +128,17 @@ public class GameOfCluedo {
 		//move relevant objects to the room
 		//weapon symbols as follows: Y(spanner) 8(rope) F(revolver) /(lead pipe) !(dagger) I(candlestick)
 		
-		//check if players can refute 
+		//check if players can refute the suggestion one at a time
+		int nextPlayerNum = getNextPlayer(currentPlayer);
+		Player nextPlayer = players.get(nextPlayerNum);
+		Set<Card> refuteCards = nextPlayer.getHand().findMatches(character, weapon, room);
+		
+		if(!refuteCards.isEmpty()){
+			ui.println("Player " + nextPlayerNum + " can refute Player " + currentPlayer + "'s suggestion.");
+			ui.println("Give the screen/keyboard to Player " + nextPlayerNum + "please. When Player" + nextPlayerNum + " is ready, type yes");
+			
+		}
+		
 	}
 	
 	
@@ -153,6 +166,15 @@ public class GameOfCluedo {
 		else{
 			player.setInactive();
 			return false;
+		}
+	}
+	
+	private int getNextPlayer(int prevPlayer){
+		if(prevPlayer == players.size()){
+			return 1;
+		}
+		else{
+			return prevPlayer+1;
 		}
 	}
 	

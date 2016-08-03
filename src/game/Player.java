@@ -14,7 +14,7 @@ import game.Player.Token;
 
 public class Player {
 	public enum Token{
-		MissScarlet,
+		MissScarlett,
 		ColonelMustard,
 		ProfessorPlum,
 		MrsWhite,
@@ -69,7 +69,7 @@ public class Player {
 	 */
 	public Location getStartLocation(Token token){
 		switch(token){
-		case MissScarlet:
+		case MissScarlett:
 			return new Location('h',25, 7);
 		case ColonelMustard:
 			return new Location('a',18, 0);

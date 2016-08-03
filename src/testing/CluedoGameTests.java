@@ -69,7 +69,7 @@ public class CluedoGameTests {
 		//goes into 18 with no remainders
 		GameOfCluedo game = new GameOfCluedo();
 		try{
-			game.addPlayer(new Player(Player.Token.MissScarlet));
+			game.addPlayer(new Player(Player.Token.MissScarlett));
 			game.addPlayer(new Player(Player.Token.ColonelMustard));
 			System.out.println("Players created");
 		}
@@ -96,7 +96,7 @@ public class CluedoGameTests {
 		//goes into 18 with no remainders
 				GameOfCluedo game = new GameOfCluedo();
 				try{
-					game.addPlayer(new Player(Player.Token.MissScarlet));
+					game.addPlayer(new Player(Player.Token.MissScarlett));
 					game.addPlayer(new Player(Player.Token.ColonelMustard));
 					game.addPlayer(new Player(Player.Token.MrsPeacock));
 					game.addPlayer(new Player(Player.Token.MrsWhite));

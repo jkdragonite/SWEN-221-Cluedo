@@ -32,6 +32,8 @@ public class TextClient {
 	static Pattern CHARACTERPAT = Pattern.compile("scarlett|mustard|white|green|peacock|plum");
 	static Pattern ROOMPAT = Pattern.compile("kitchen|ballroom|conservatory|billiard room|dining room|library|study|hall|lounge");
 	static Pattern WEAPONPAT = Pattern.compile("candlestick|dagger|lead pipe|revolver|rope|spanner");
+	static Pattern CONFIRMPAT = Pattern.compile("yes");
+	static Pattern REFUSEPAT = Pattern.compile("no");
 	
 	public String getCharacter(){
 		if(in.hasNext(CHARACTERPAT)){
@@ -71,6 +73,10 @@ public class TextClient {
 			out.println("The input entered was invalid: please enter an integer below.");
 			return getInt();
 		}
+	}
+	//confirmation from player method
+	public String getYNResponse(){
+		return "you didn't implement this yet ya silly";
 	}
 	
 	
