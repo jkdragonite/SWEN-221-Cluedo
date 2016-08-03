@@ -25,6 +25,7 @@ public class Player {
 	private Token token;
 	private Location location;
 	private Hand hand;
+	private boolean activePlayer;
 	
 	/**
 	 * 
@@ -36,6 +37,7 @@ public class Player {
 		this.token = token;
 		this.hand = new Hand(new HashSet<Card>());
 		this.location = getStartLocation(token);
+		activePlayer = true;
 	}
 	
 	public Token getToken(){
@@ -51,6 +53,10 @@ public class Player {
 	
 	public Hand getHand(){
 		return hand;
+	}
+	
+	public void setInactive(){
+		activePlayer = false;
 	}
 	
 	/**

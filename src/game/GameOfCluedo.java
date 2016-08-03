@@ -6,11 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ui.Board;
+import ui.TextClient;
 
 public class GameOfCluedo {
 	//private Board board;
 	private List<Player> players;
 	private ArrayList<Card> solution;
+	private TextClient ui;
 	
 	public enum Weapon{
 		Candlestick,
@@ -25,6 +27,7 @@ public class GameOfCluedo {
 		//board = new Board();
 		players = new ArrayList<Player>();
 		solution = new ArrayList<Card>();
+		ui = new TextClient();
 	}
 	
 	public void addPlayer(Player player) throws GameError{
@@ -41,9 +44,6 @@ public class GameOfCluedo {
 		return players.get(playerNum -1);
 	}
 	
-	public List<Player> getPlayers(){
-		return this.players;
-	}
 	
 	public ArrayList<Card> getSolution(){
 		return solution;
@@ -54,19 +54,14 @@ public class GameOfCluedo {
 		Collections.shuffle(deck);
 		
 		while(!deck.isEmpty()){
-			System.out.println("deck size:" + deck.size());
-			System.out.println("players:" + players.size());
 			if(deck.size() < players.size()){
-				System.out.println("less cards than players reached");
 				for(int i = deck.size()-1; i >= 0; i--){
 					players.get(i).addToHand(deck.remove(i));
-					System.out.println("added card to player" + i);
 				}					
 			}
 			else{
 				for(int i = players.size()-1; i >= 0; i--){
 					players.get(i).addToHand(deck.remove(i));
-					System.out.println("added card to player" + i);
 				}	
 			}
 		}
@@ -77,7 +72,7 @@ public class GameOfCluedo {
 		ArrayList<Card> rooms = new ArrayList<Card>();
 		ArrayList<Card> weapons = new ArrayList<Card>();
 		
-		characters.add(new CharacterCard("Miss Scarlet"));
+		characters.add(new CharacterCard("Miss Scarlett"));
 		characters.add(new CharacterCard("Colonel Mustard"));
 		characters.add(new CharacterCard("Mrs. White"));
 		characters.add(new CharacterCard("Reverend Green"));
@@ -128,7 +123,37 @@ public class GameOfCluedo {
 		//}
 		
 		//move relevant objects to the room
-		//weapon symbols as follows: Y(spanner) 8(rope) F(revolver) /(lead pipe) !(dagger) I(candlestick) 
+		//weapon symbols as follows: Y(spanner) 8(rope) F(revolver) /(lead pipe) !(dagger) I(candlestick)
+		
+		//check if players can refute 
+	}
+	
+	
+	/**
+	 * Used by the give player when they believe they have determined the correct solution. There are no refutations 
+	 * from other players, and the solution is then compared with the accusation: if they correspond, the given player
+	 * is the winner. If not, the player is removed from the game.
+	 *  
+	 * @param player making the accusation
+	 * @param character accused of the murder
+	 * @param room the murder is said to have been committed in
+	 * @param weapon used in the murder
+	 * 
+	 * @return true if the solution matches
+	 */
+	public boolean makeAccusation(Player player, String character, String room, String weapon){
+		String murderer = solution.get(0).getInfo();
+		String solRoom = solution.get(1).getInfo();
+		String solWeapon = solution.get(2).getInfo();
+		
+		if(character.equalsIgnoreCase(murderer) && room.equalsIgnoreCase(solRoom) 
+				&& weapon.equalsIgnoreCase(solWeapon)){
+			return true;
+		}
+		else{
+			player.setInactive();
+			return false;
+		}
 	}
 	
 	/**
