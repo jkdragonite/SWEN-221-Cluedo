@@ -10,7 +10,7 @@ public class Board {
 	private Square[][] boardSquares;
 	  
 	// using characters just to get started, will change to square instances later
-	Board(){
+	public Board(){
 		cleanBoard = new char[][]{
 				{'x','x','x','x','x','x','x','x','x','`','x','x','x','x','x','`','x','x','x','x','x','x','x','x','x'},
 				{'r','r','r','r','r','s','.','.','.','.','r','r','r','r','r','.','.','.','.','r','r','r','r','r','r'},
