@@ -1,5 +1,5 @@
 package ui;
 
-public abstract class Square {
-
+public interface Square {
+	
 }

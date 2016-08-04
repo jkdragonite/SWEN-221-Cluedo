@@ -6,7 +6,7 @@ import game.GameOfCluedo;
 import game.Location;
 import game.Player;
 
-public class Room extends Square {
+public class Room implements Square {
 	// mucking about with square ideas
 	
 	private Player[] playersInside;

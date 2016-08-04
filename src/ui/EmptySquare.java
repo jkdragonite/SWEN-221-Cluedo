@@ -2,7 +2,7 @@ package ui;
 
 import game.Player;
 
-public class EmptySquare extends Square{
+public class EmptySquare implements Square{
 	// player occupying square, to help check movement legality
 	private Player playerOnSquare = null;
 	
@@ -10,5 +10,11 @@ public class EmptySquare extends Square{
 		return this.playerOnSquare;
 	}
 	
+	public void setPlayer(Player player){
+		this.playerOnSquare = player;
+	}
 
+	public void removePlayer(){
+		this.playerOnSquare = null;
+	}
 }

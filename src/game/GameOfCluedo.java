@@ -1,10 +1,14 @@
 package game;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
+
+import com.sun.org.glassfish.external.statistics.Statistic;
 
 import ui.Board;
 import ui.TextClient;
@@ -23,6 +27,13 @@ public class GameOfCluedo {
 		Revolver,
 		Rope,
 		Spanner
+	}
+	
+	public static void main(String args[]){
+		Boolean gameGoine = true;
+		while (gameGoine){
+			GameOfCluedo game = new GameOfCluedo();	
+		}
 	}
 	
 	public GameOfCluedo(){
