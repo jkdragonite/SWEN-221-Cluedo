@@ -1,6 +1,6 @@
 package ui;
 
-public class Door implements Square {
+public class Door extends EmptySquare implements Square {
 	private Room room;
 	
 	public Door(Room room){

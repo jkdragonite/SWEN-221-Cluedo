@@ -15,13 +15,10 @@ import java.awt.Point;
 public class Location {
 	private char xLoc;
 	private int yLoc;
-	// added an in x just temporarily to write move functions for board stuff
-	private int intXLoc;
 	
-	public Location(char x, int y, int z){
+	public Location(char x, int y){
 		xLoc = x;
 		yLoc = y;
-		intXLoc = z;
 	}
 	
 	/**
@@ -47,9 +44,6 @@ public class Location {
 		return getBoardCoOrd().x;
 	}
 	
-	public int getIntXLoc(){
-		return this.intXLoc;
-	}
 	
 	void setYLoc(int y){
 		this.yLoc = y;
@@ -59,7 +53,4 @@ public class Location {
 		this.xLoc = x;
 	}
 	
-	void setIntXLoc(int x){
-		this.intXLoc = x;
-	}
 }
