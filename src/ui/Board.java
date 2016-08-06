@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.List;
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -10,7 +11,56 @@ public class Board {
 	
 	private char[][] currentBoardArray;
 	private char[][] cleanBoard;
-	private Square[][] boardSquares;
+	private Square[][] boardSquares = {{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+	},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+		
+	},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+		
+	},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+		
+	},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+		
+	},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+		
+	},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+		
+	},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+		
+	},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+		
+	},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+		
+	},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+		
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			},{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
+				
+			}};
 	private Room[] rooms;
 	
 	
@@ -76,12 +126,16 @@ public class Board {
 				{'r','r','r','r','r','r','r','.','.','r','r','r','r','r','r','r','.','.','r','r','r','r','r','r','r'},
 				{'r','r','r','r','r','r','x','`','x','r','r','r','r','r','r','r','x','.','r','r','r','r','r','r','r'},
 		};			
+		
+		createBoard();
 	}
 	
 	public void createBoard(){
-		for ( int i = 0; i < 25; i ++){
+		for ( int i = 0; i < boardSquares.length; i ++){
 			for ( int j = 0; j < 25; j ++){
 				if (cleanBoard[i][j] == 'x'){
+					System.out.println(i);
+					System.out.println(j);
 					boardSquares[i][j] = new NonPlayableSquare();
 				}
 				else {
@@ -103,25 +157,25 @@ public class Board {
 		Room study = new Room("Study", null);
 		
 		
-		boardSquares[1][5] = new Stairs(new Location('F', 1), kitchen, study);
+		boardSquares[1][5] = new Stairs(new Location('f', 1), kitchen, study);
 		boardSquares[19][0] = new Stairs(new Location('A', 19), lounge, conservatory);
 		boardSquares[5][23] = new Stairs(new Location('X', 5), conservatory, lounge);
 		boardSquares[21][24] = new Stairs(new Location('Y', 5), study, kitchen);
 		
 		
-		boardSquares[2][5] = new Door(kitchen);
+		boardSquares[7][4] = new Door(kitchen);
 		
-		boardSquares[12][9] = new Door(diningRoom);
-		boardSquares[16][7] = new Door(diningRoom);
+		boardSquares[12][8] = new Door(diningRoom);
+		boardSquares[16][6] = new Door(diningRoom);
 		
-		boardSquares[18][7] = new Door(lounge);
+		boardSquares[18][6] = new Door(lounge);
 
 		boardSquares[5][7] = new Door(ballRoom);
 		boardSquares[8][9] = new Door(ballRoom);
 		boardSquares[5][17] = new Door(ballRoom);
 		boardSquares[8][15] = new Door(ballRoom);
 		
-		boardSquares[8][15] = new Door(conservatory);
+		boardSquares[5][19] = new Door(conservatory);
 		
 		boardSquares[17][11] = new Door(hall);
 		boardSquares[17][12] = new Door(hall);
@@ -147,9 +201,11 @@ public class Board {
 				library, lounge, hall, study};
 		this.rooms = roomArray;
 		
-		for (Room room : rooms){
+		for (Room room : roomArray){
+			System.out.println(room.getName());
 			for (Location location : room.getRoomSquares()){
 				Point point = location.getBoardCoOrd();
+				System.out.println(":OIAHKHKH" + point);
 				boardSquares[point.y][point.x] = room;
 			}
 			
@@ -163,6 +219,20 @@ public class Board {
 			}
 		}
 		return false;
+	}
+	
+	
+	public String otherString(){
+		String boardState = "";
+		for (Square[] x : this.boardSquares){
+			boardState = boardState+"\n";
+			boardState = boardState + '|';
+			for (Square y : x){
+				boardState = boardState + y.toString();
+				boardState = boardState + '|';
+			}
+		}
+		return boardState;
 	}
 	
 	public String toString(){
@@ -189,62 +259,12 @@ public class Board {
 	
 	
 	
+	
+	
 	public static void main(String[] args){
 		Board board = new Board();
-		System.out.println(board.toString());
+		System.out.println(board.otherString());
 	}
 	
 	
 }
-
-
-//for ( int j = 0; j < 25; j ++){
-//for ( int i = 0; i < 25; i ++){
-//	if(cleanBoard[j][i] == 'x' || cleanBoard[j][i] == '.' || cleanBoard[j][i] == '`'){
-//		boardSquares[j][i] = new EmptySquare();
-//	}
-//	
-//	if (cleanBoard[j][i] == 'r'){
-//		if (j > 8 && j < 16){
-//			if (j > -1 && j < 8){
-//				boardSquares[j][i] = diningRoom;
-//			}
-//		}
-//		if (j > 18){
-//			if (j > -1 && j < 7){
-//				boardSquares[j][i] = loRoom;
-//			}
-//		}
-//		if (j > 0 && j < 6){
-//			if (j > -1 && j < 6){
-//				boardSquares[j][i] = kRoom;
-//			}
-//		}
-//		if (j > 0 && j < 6){
-//			if (j > -1 && j < 6){
-//				boardSquares[j][i] = kRoom;
-//			}
-//		}
-//		if (j > 0 && j < 6){
-//			if (j > -1 && j < 6){
-//				boardSquares[j][i] = kRoom;
-//			}
-//		}
-//		if (j > 0 && j < 6){
-//			if (j > -1 && j < 6){
-//				boardSquares[j][i] = kRoom;
-//			}
-//		}
-//		if (j > 0 && j < 6){
-//			if (j > -1 && j < 6){
-//				boardSquares[j][i] = kRoom;
-//			}
-//		}
-//		if (j > 0 && j < 6){
-//			if (j > -1 && j < 6){
-//				boardSquares[j][i] = kRoom;
-//			}
-//		}
-//	}
-//}
-//}

@@ -17,6 +17,12 @@ public class Stairs implements Square {
 		this.destinationRoom = destination;
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "s";
+	}
 	// location in constructor?
 	// travel method?
 

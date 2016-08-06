@@ -17,7 +17,7 @@ public class Location {
 	private int yLoc;
 	
 	public Location(char x, int y){
-		xLoc = x;
+		xLoc = Character.toLowerCase(x);
 		yLoc = y;
 	}
 	

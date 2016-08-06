@@ -11,4 +11,9 @@ public class Door extends EmptySquare implements Square {
 		return this.room;
 	}
 
+	@Override
+	public String toString(){
+		return "D";
+	}
+	
 }

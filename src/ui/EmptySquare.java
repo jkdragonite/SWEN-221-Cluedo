@@ -17,4 +17,10 @@ public class EmptySquare implements Square{
 	public void removePlayer(){
 		this.playerOnSquare = null;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return ".";
+	}
 }
