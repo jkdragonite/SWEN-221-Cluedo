@@ -70,17 +70,17 @@ public class Player {
 	public Location getStartLocation(Token token){
 		switch(token){
 		case MissScarlett:
-			return new Location('h',25, 7);
+			return new Location('h',25);
 		case ColonelMustard:
-			return new Location('a',18, 0);
+			return new Location('a',18);
 		case ProfessorPlum:
-			return new Location('y',20, 24);
+			return new Location('y',20);
 		case MrsWhite:
-			return new Location('j',1, 9);
+			return new Location('j',1);
 		case ReverendGreen:
-			return new Location('p',1, 15);
+			return new Location('p',1);
 		case MrsPeacock:
-			return new Location('y',7, 24);
+			return new Location('y',7);
 		}
 		throw new IllegalArgumentException("Token " + token + " has no match");
 	}
