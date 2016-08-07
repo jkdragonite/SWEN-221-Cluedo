@@ -47,7 +47,7 @@ public class Main {
 							availableTokens.add(token);
 						}
 					}
-					
+					// loop through tokens taken vs tokens available, present these at options to user
 					textClient.println("Please choose a player to add:");
 					String playerString = "";
 					for (int i = 0; i < availableTokens.size(); i++){
@@ -55,6 +55,7 @@ public class Main {
 					}
 					int userChoice = textClient.getInt();
 					Player newPlayer = new Player(availableTokens.get(userChoice));
+					// add user's choice
 					game.addPlayer(newPlayer);					
 //				}				
 			}
