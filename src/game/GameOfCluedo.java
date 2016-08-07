@@ -1,24 +1,23 @@
 package game;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
-
-import com.sun.org.glassfish.external.statistics.Statistic;
 
 import ui.Board;
 import ui.TextClient;
 
 public class GameOfCluedo {
-	//private Board board;
+	private Board board;
 	private List<Player> players;
 	private int currentPlayer;
 	private ArrayList<Card> solution;
 	private TextClient ui;
+	public boolean gameWon;
+	
+	private String characterKey = "Miss Scarlett: S | Colonel Mustard: C | Mrs. White: W | Reverend Green: G | Mrs. Peacock: M | Professor Plum: P";
+	private final String weaponKey = "Weapon Symbols || 'Y' : spanner | '8' : rope | 'F' : revolver | '/' : lead pipe | '!' : dagger | 'I' : candlestick";
 	
 	public enum Weapon{
 		Candlestick,
@@ -29,19 +28,13 @@ public class GameOfCluedo {
 		Spanner
 	}
 	
-	public static void main(String args[]){
-		Boolean gameGoine = true;
-		while (gameGoine){
-			GameOfCluedo game = new GameOfCluedo();	
-		}
-	}
-	
 	public GameOfCluedo(){
-		//board = new Board();
+		board = new Board();
 		players = new ArrayList<Player>();
 		currentPlayer = 1;
 		solution = new ArrayList<Card>();
 		ui = new TextClient();
+		gameWon = false;
 	}
 	
 	public void addPlayer(Player player) throws GameError{
@@ -58,9 +51,8 @@ public class GameOfCluedo {
 		return players.get(playerNum -1);
 	}
 	
-	
-	public ArrayList<Card> getSolution(){
-		return solution;
+	public List<Player> getPlayers(){
+		return this.players;
 	}
 	
 	public void dealCards(){
@@ -132,24 +124,68 @@ public class GameOfCluedo {
 	}
 	
 	public void makeSuggestion(Player player, String character, String room, String weapon) throws GameError{
-		//if(!board.isInRoom(room, player.getLocation())){
-		//	throw new GameError("Player is not in the correct location: please move to the " + room + "to make this suggestion");
-		//}
+//		if(!board.isInRoom(room, player.getLocation())){
+//			throw new GameError("Player is not in the correct location: please move to the " + room + "to make this suggestion");
+//		}
+		if(player.getRoom().getName() != room){
+		throw new GameError("Player is not in the correct location: please move to the " + room + "to make this suggestion");
+	}
 		
 		//move relevant objects to the room
-		//weapon symbols as follows: Y(spanner) 8(rope) F(revolver) /(lead pipe) !(dagger) I(candlestick)
+		//board.move(String weapon, String room)
+		//board move searches the room 
 		
 		//check if players can refute the suggestion one at a time
 		int nextPlayerNum = getNextPlayer(currentPlayer);
 		Player nextPlayer = players.get(nextPlayerNum);
-		Set<Card> refuteCards = nextPlayer.getHand().findMatches(character, weapon, room);
 		
-		if(!refuteCards.isEmpty()){
-			ui.println("Player " + nextPlayerNum + " can refute Player " + currentPlayer + "'s suggestion.");
-			ui.println("Give the screen/keyboard to Player " + nextPlayerNum + "please. When Player" + nextPlayerNum + " is ready, type yes");
+		boolean refuted = false;
+		Set<Card> refuteCards;
+		for(Player p = nextPlayer; !refuted || !p.equals(players.get(currentPlayer)); p = players.get(getNextPlayer(nextPlayerNum))){
+			nextPlayerNum = getNextPlayer(nextPlayerNum);
+			refuteCards = p.getHand().findMatches(character, weapon, room);
 			
+			if(!refuteCards.isEmpty()){
+				refuted = true;
+				ui.println("Player " + nextPlayerNum + " can refute Player " + currentPlayer + "'s suggestion.");
+				ui.println("Give the screen/keyboard to Player " + nextPlayerNum + "please. When Player" + nextPlayerNum + " is ready, type yes");
+				if(ui.getConfirm()){
+					String refuteCard = getRefutation(refuteCards, true);
+					ui.println("Thank you for choosing your card to refute with.");
+					ui.println("Please give the screen/keyboard back to Player " + currentPlayer + ". When Player" + currentPlayer + " is ready, type yes");
+					if(ui.getConfirm()){
+						repaintUI(false);
+						ui.println("Player " + nextPlayerNum + " has chosen to refute your suggestion and shows you this card:  " + refuteCard);
+					}
+					else{throw new GameError("Getting to this error should be technically impossible. Congratulations! Everything is terrible now.");}
+				}
+				else{throw new GameError("Getting to this error should be technically impossible. Congratulations! Everything is terrible now.");}
+			}
 		}
-		
+		//if the loop exits and no-one has refuted, we call makeAccusation, as it follows the same steps we need to take now. 
+		if(!refuted){
+			gameWon = makeAccusation(players.get(currentPlayer), character, room, weapon);
+		}
+	}
+	
+	public String getRefutation(Set<Card> refuteCards, boolean firstRun){
+		repaintUI(true);
+		if(!firstRun){
+			ui.println("You entered a card that wasn't in your hand. Please note cheaters never prosper.");
+			ui.println("Now, please follow the instructions properly this time.");
+		}
+		ui.println("Enter the name of the card from the following list you wish to refute with exactly as printed below:");
+		for(Card c : refuteCards){
+			ui.println(c.getInfo());
+		}
+		String refuteChoice = ui.getCard();
+		//ensure that the response is actually one from the player's hand, else run the method again
+		for(Card c : refuteCards){
+			if(c.getInfo().equals(refuteChoice)){
+				return refuteChoice;
+			}
+		}
+		return getRefutation(refuteCards, false);
 	}
 	
 	
@@ -187,6 +223,54 @@ public class GameOfCluedo {
 		else{
 			return prevPlayer+1;
 		}
+	}
+	/**
+	 * Clears and then prints all base information to the output. 
+	 * Takes a boolean which is true when this method is called from the makeSuggestion
+	 * method which allows it to not print the current player's hand when another player is 
+	 * choosing a card from their hand 
+	 * @param isSuggestion
+	 */
+	public void repaintUI(boolean isSuggestion){
+		ui.clearWindow();
+		ui.println("CLUEDO GAME");
+		ui.println(characterKey);
+		ui.println(weaponKey);
+		ui.println(board.toString());
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String generateCharacterKey(){
+		char[] currentKey = characterKey.toCharArray();
+		
+		for(int i = 0; i < players.size(); i++){
+			switch(players.get(i).getToken()){
+			case MissScarlett:
+				currentKey[15] = (char) (i+49);
+			case ColonelMustard:
+				currentKey[36] = (char) (i+49);
+			case ProfessorPlum:
+				currentKey[109] = (char) (i+49);
+			case MrsWhite:
+				currentKey[51] = (char) (i+49);
+			case ReverendGreen:
+				currentKey[71] = (char) (i+49);
+			case MrsPeacock:
+				currentKey[89] = (char) (i+49);
+			}
+		}
+		return String.valueOf(currentKey);
+	}
+	
+	/**
+	 * Returns the set of cards that make up the solution. Used mainly in tests case
+	 * @return
+	 */
+	public ArrayList<Card> getSolution(){
+		return solution;
 	}
 	
 	/**

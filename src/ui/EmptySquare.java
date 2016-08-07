@@ -2,7 +2,7 @@ package ui;
 
 import game.Player;
 
-public class EmptySquare implements Square{
+public class EmptySquare extends Square{
 	// player occupying square, to help check movement legality
 	private Player playerOnSquare = null;
 	
@@ -20,7 +20,12 @@ public class EmptySquare implements Square{
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return ".";
+		if (this.playerOnSquare == null){
+			return ".";	
+		}
+		else{
+			return this.playerOnSquare.toString();
+		}
+		
 	}
 }

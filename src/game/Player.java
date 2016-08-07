@@ -2,6 +2,7 @@ package game;
 
 import java.util.HashSet;
 
+import ui.Room;
 import game.Player.Token;
 
 /**
@@ -26,6 +27,7 @@ public class Player {
 	private Location location;
 	private Hand hand;
 	private boolean activePlayer;
+	private Room room;
 	
 	/**
 	 * 
@@ -37,8 +39,12 @@ public class Player {
 		this.token = token;
 		this.hand = new Hand(new HashSet<Card>());
 		this.location = getStartLocation(token);
+		this.room = null;
 		activePlayer = true;
 	}
+	
+	// get moves
+	// get movement choices
 	
 	public Token getToken(){
 		return token;
@@ -83,6 +89,18 @@ public class Player {
 			return new Location('y',7);
 		}
 		throw new IllegalArgumentException("Token " + token + " has no match");
+	}
+	
+	public void setRoom(Room room){
+		this.room = room;
+	}
+	
+	public void resetRoom(){
+		this.room = null;
+	}
+	
+	public Room getRoom(){
+		return this.room;
 	}
 	
 	public void addToHand(Card card){

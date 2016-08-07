@@ -1,6 +1,6 @@
 package ui;
 
-public class NonPlayableSquare implements Square {
+public class NonPlayableSquare extends Square {
 	@Override
 	public String toString(){
 		return "x";

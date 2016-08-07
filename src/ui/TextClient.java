@@ -24,14 +24,18 @@ public class TextClient {
 	 * @param toPrint
 	 */
 	public void println(String toPrint){
+		// add \n to print statement?  
+		
 		out.println(toPrint);
 	}
 	
 	//patterns for input validation/recognition
-	static Pattern  TOKENNAME = Pattern.compile("Miss Scarlett|Colonel Mustard|Mrs. White|Reverend Green|Mrs. Peacock|Professor Plum");
+	static Pattern TOKENNAME = Pattern.compile("Miss Scarlett|Colonel Mustard|Mrs. White|Reverend Green|Mrs. Peacock|Professor Plum");
 	static Pattern CHARACTERPAT = Pattern.compile("scarlett|mustard|white|green|peacock|plum");
 	static Pattern ROOMPAT = Pattern.compile("kitchen|ballroom|conservatory|billiard room|dining room|library|study|hall|lounge");
 	static Pattern WEAPONPAT = Pattern.compile("candlestick|dagger|lead pipe|revolver|rope|spanner");
+	static Pattern ROOMCARDPAT = Pattern.compile("Kitchen|Ballroom|Conservatory|Billiard Room|Dining Room|Library|Study|Hall|Lounge");
+	static Pattern WEAPONCARDPAT = Pattern.compile("Candlestick|Dagger|Lead Pipe|Revolver|Rope|Spanner");
 	static Pattern CONFIRMPAT = Pattern.compile("yes");
 	static Pattern REFUSEPAT = Pattern.compile("no");
 	
@@ -77,6 +81,32 @@ public class TextClient {
 	//confirmation from player method
 	public String getYNResponse(){
 		return "you didn't implement this yet ya silly";
+	}
+	
+	public boolean getConfirm(){
+		if(in.hasNext(CONFIRMPAT)){
+			return true;
+		}
+		else{
+			out.println("You are required to type 'yes' to confirm. Please do so.");
+			return getConfirm();
+		}
+	}
+	
+	public String getCard(){
+		if(in.hasNext(TOKENNAME) || in.hasNext(ROOMCARDPAT) || in.hasNext(WEAPONCARDPAT)){
+			return in.next();
+		}
+		else{
+			out.println("The input entered was invalid: please enter the card name you wish to refute with EXACTLY as printed above. EXACTLY.");
+			return getCard();
+		}
+	}
+	
+	public void clearWindow(){
+		for(int i = 0; i < 10; i++){
+			out.println();
+		}
 	}
 	
 	

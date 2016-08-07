@@ -1,7 +1,10 @@
 package ui;
 
-public class Door extends EmptySquare implements Square {
+import game.Player;
+
+public class Door extends EmptySquare {
 	private Room room;
+	private Player playerOnSquare;
 	
 	public Door(Room room){
 		this.room = room;
@@ -13,7 +16,12 @@ public class Door extends EmptySquare implements Square {
 
 	@Override
 	public String toString(){
+		if (this.playerOnSquare == null){
+			return ".";	
+		}
+		else{
 		return "D";
+		}
 	}
 	
 }

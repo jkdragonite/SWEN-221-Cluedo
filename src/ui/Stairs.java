@@ -4,7 +4,7 @@ import javax.print.attribute.standard.Destination;
 
 import game.Location;
 
-public class Stairs implements Square {
+public class Stairs extends Square {
 	
 	private Location location;
 	private Room room;

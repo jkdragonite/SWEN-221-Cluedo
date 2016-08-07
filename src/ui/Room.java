@@ -8,13 +8,14 @@ import game.Location;
 import game.Player;
 
 
-public class Room implements Square {
+public class Room extends Square {
 	// mucking about with square ideas
 	
 	private List<Player> playersInside = new ArrayList<Player>();
 	private GameOfCluedo.Weapon weapon = null;
 	private String roomName;
 	private ArrayList<Location> roomSquares = new ArrayList<>();
+	private Stairs stairs = null; 
 	
 	/**
 	 * Creates an new instance of a room with the specified name, and list of encompassing locations. 
@@ -62,6 +63,14 @@ public class Room implements Square {
 	
 	public String getName(){
 		return this.roomName;
+	}
+	
+	public Stairs getStairs(){
+		return this.stairs;
+	}
+	
+	public void setStairs(Stairs stairs) {
+		this.stairs = stairs;
 	}
 	
 	@Override

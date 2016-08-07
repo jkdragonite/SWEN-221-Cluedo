@@ -1,7 +1,8 @@
 package game;
 
 import java.awt.Point;
-
+import java.util.HashMap;
+import java.util.Map;
 /**
  * This class represents the alphanumerical location on a 
  * Cluedo Board, which is used primarily for finding and 
@@ -15,6 +16,7 @@ import java.awt.Point;
 public class Location {
 	private char xLoc;
 	private int yLoc;
+	
 	
 	public Location(char x, int y){
 		xLoc = Character.toLowerCase(x);
@@ -52,5 +54,7 @@ public class Location {
 	void setXLoc(char x){
 		this.xLoc = x;
 	}
+	
+
 	
 }

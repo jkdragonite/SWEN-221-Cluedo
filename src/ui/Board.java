@@ -3,12 +3,15 @@ package ui;
 import java.awt.List;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import game.Location;
 import game.Player;
 
 public class Board {
 	
+	public Map<Integer, Character> charMap = new HashMap<Integer, Character>();
 	private char[][] currentBoardArray;
 	private char[][] cleanBoard;
 	private Square[][] boardSquares = {{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
@@ -69,6 +72,8 @@ public class Board {
 	  
 	// using characters just to get started, will change to square instances later
 	public Board(){
+		makeMap();
+		
 		cleanBoard = new char[][]{
 				{'x','x','x','x','x','x','x','x','x','`','x','x','x','x','x','`','x','x','x','x','x','x','x','x','x'},
 				{'r','r','r','r','r','s','.','.','.','.','r','r','r','r','r','.','.','.','.','r','r','r','r','r','r'},
@@ -130,12 +135,38 @@ public class Board {
 		createBoard();
 	}
 	
+	
+	void makeMap(){
+		this.charMap.put(0, 'a');
+		this.charMap.put(1, 'b');
+		this.charMap.put(2, 'c');
+		this.charMap.put(3, 'd');
+		this.charMap.put(4, 'e');
+		this.charMap.put(5, 'f');
+		this.charMap.put(6, 'g');
+		this.charMap.put(7, 'h');
+		this.charMap.put(8, 'i');
+		this.charMap.put(9, 'j');
+		this.charMap.put(10, 'k');
+		this.charMap.put(11, 'l');
+		this.charMap.put(12, 'm');
+		this.charMap.put(13, 'n');
+		this.charMap.put(14, 'o');
+		this.charMap.put(15, 'p');
+		this.charMap.put(16, 'q');
+		this.charMap.put(17, 'r');
+		this.charMap.put(18, 's');
+		this.charMap.put(19, 't');
+		this.charMap.put(20, 'u');
+		this.charMap.put(21, 'v');
+		this.charMap.put(22, 'w');
+		this.charMap.put(23, 'x');
+		this.charMap.put(24, 'y');		
+	}
 	public void createBoard(){
 		for ( int i = 0; i < boardSquares.length; i ++){
 			for ( int j = 0; j < 25; j ++){
 				if (cleanBoard[i][j] == 'x'){
-					System.out.println(i);
-					System.out.println(j);
 					boardSquares[i][j] = new NonPlayableSquare();
 				}
 				else {
@@ -157,10 +188,21 @@ public class Board {
 		Room study = new Room("Study", null);
 		
 		
-		boardSquares[1][5] = new Stairs(new Location('f', 1), kitchen, study);
-		boardSquares[19][0] = new Stairs(new Location('A', 19), lounge, conservatory);
-		boardSquares[5][23] = new Stairs(new Location('X', 5), conservatory, lounge);
-		boardSquares[21][24] = new Stairs(new Location('Y', 5), study, kitchen);
+		Stairs kitchenStairs = new Stairs(new Location('f', 1), kitchen, study); 
+		boardSquares[1][5] = kitchenStairs;
+		kitchen.setStairs(kitchenStairs);
+		
+		Stairs loungeStairs = new Stairs(new Location('A', 19), lounge, conservatory);
+		boardSquares[19][0] = loungeStairs;
+		lounge.setStairs(loungeStairs);
+		
+		Stairs conservatoryStairs = new Stairs(new Location('X', 5), conservatory, lounge);
+		boardSquares[5][23] = conservatoryStairs;
+		conservatory.setStairs(conservatoryStairs);
+		
+		Stairs studyStairs = new Stairs(new Location('Y', 5), study, kitchen);
+		boardSquares[21][24] = studyStairs;
+		study.setStairs(studyStairs);
 		
 		
 		boardSquares[7][4] = new Door(kitchen);
@@ -202,10 +244,8 @@ public class Board {
 		this.rooms = roomArray;
 		
 		for (Room room : roomArray){
-			System.out.println(room.getName());
 			for (Location location : room.getRoomSquares()){
 				Point point = location.getBoardCoOrd();
-				System.out.println(":OIAHKHKH" + point);
 				boardSquares[point.y][point.x] = room;
 			}
 			
@@ -224,7 +264,7 @@ public class Board {
 	
 	public String otherString(){
 		String boardState = "";
-		for (Square[] x : this.boardSquares){
+		for (Square[] x : this.boardSquares){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 			boardState = boardState+"\n";
 			boardState = boardState + '|';
 			for (Square y : x){
@@ -249,22 +289,66 @@ public class Board {
 	}
 	
 	public void movePlayer(Player player, int x, int y){
+		for (Room room : rooms){
+			if (room.isInRoom(player.getLocation())){
+				room.removePlayer(player);
+				player.resetRoom();
+			}
+		}				
 		Point point =  player.getLocation().getBoardCoOrd();
 		int currentY = point.y;
 		int currentX = point.x;
-		this.currentBoardArray[y][x] = currentBoardArray[currentY][currentX];
-		this.currentBoardArray[currentY][currentX] = cleanBoard[currentY][currentX];
-		player.setLocation(new Location('a', y));
+		// add player to empty square / room
+		this.boardSquares[currentY][currentX].removePlayer();
+		this.boardSquares[y][x].setPlayer(player);
+		player.setLocation(new Location(charMap.get(x), y));
+		for (Room room : rooms){
+			if (room.isInRoom(player.getLocation())){
+				room.addPlayer(player);
+				player.setRoom(room);
+			}
+		}
+	}
+	
+	public Map<String, Location> getMoves(Player player){
+		// this is gonna be wrong because of the getlocaiton stuff
+//		ArrayList<Location> playerMoves = new ArrayList<Location>();
+//		ArrayList<String> moves = new ArrayList<String>(); 
+		Map<String, Location> possibleMoves = new HashMap<String, Location>();
+		// if instance of room add move for room
+
+		if (boardSquares[player.getLocation().getBoardCoOrd().y-1][player.getLocation().getBoardCoOrd().x] instanceof EmptySquare || 
+				boardSquares[player.getLocation().getBoardCoOrd().y-1][player.getLocation().getBoardCoOrd().x] instanceof Door ||
+				boardSquares[player.getLocation().getBoardCoOrd().y-1][player.getLocation().getBoardCoOrd().x] instanceof Room){
+			possibleMoves.put("Move Up", new Location(charMap.get(player.getLocation().getBoardCoOrd().x), player.getLocation().getBoardCoOrd().y-1));
+		}
+		if (boardSquares[player.getLocation().getBoardCoOrd().y+1][player.getLocation().getBoardCoOrd().x] instanceof EmptySquare || 
+				boardSquares[player.getLocation().getBoardCoOrd().y+1][player.getLocation().getBoardCoOrd().x] instanceof Door ||
+				boardSquares[player.getLocation().getBoardCoOrd().y+1][player.getLocation().getBoardCoOrd().x] instanceof Room){
+			possibleMoves.put("Move Down", new Location(charMap.get(player.getLocation().getBoardCoOrd().x), player.getLocation().getBoardCoOrd().y+1));
+		}		
+		if (boardSquares[player.getLocation().getBoardCoOrd().y][player.getLocation().getBoardCoOrd().x-1] instanceof EmptySquare || 
+				boardSquares[player.getLocation().getBoardCoOrd().y][player.getLocation().getBoardCoOrd().x-1] instanceof Door ||
+				boardSquares[player.getLocation().getBoardCoOrd().y][player.getLocation().getBoardCoOrd().x-1] instanceof Room){
+			possibleMoves.put("Move Left", new Location(charMap.get(player.getLocation().getBoardCoOrd().x-1), player.getLocation().getBoardCoOrd().y));
+		}
+		if (boardSquares[player.getLocation().getBoardCoOrd().y][player.getLocation().getBoardCoOrd().x+1] instanceof EmptySquare || 
+				boardSquares[player.getLocation().getBoardCoOrd().y][player.getLocation().getBoardCoOrd().x+1] instanceof Door ||
+				boardSquares[player.getLocation().getBoardCoOrd().y][player.getLocation().getBoardCoOrd().x+1] instanceof Room){
+			possibleMoves.put("Move Right", new Location(charMap.get(player.getLocation().getBoardCoOrd().x+1), player.getLocation().getBoardCoOrd().y));
+		}
+
+		return possibleMoves;
 	}
 	
 	
 	
 	
 	
-	public static void main(String[] args){
-		Board board = new Board();
-		System.out.println(board.otherString());
-	}
+//	public static void main(String[] args){
+//		Board board = new Board();
+//		System.out.println(board.otherString());
+//	}
 	
 	
 }
