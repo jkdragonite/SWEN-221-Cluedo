@@ -81,102 +81,102 @@ public class Room extends Square {
 	public void setSquares(){
 		if (this.roomName == "Kitchen"){
 			for ( int i = 2; i < 7; i++){
-				this.roomSquares.add(new Location('A', i));
+				this.roomSquares.add(new Location('a', i));
 			}
 			for ( int i = 2; i < 8; i++){
-				this.roomSquares.add(new Location('B', i));
+				this.roomSquares.add(new Location('b', i));
 			}
 			for ( int i = 2; i < 8; i++){
-				this.roomSquares.add(new Location('C', i));
+				this.roomSquares.add(new Location('c', i));
 			}
 			for ( int i = 2; i < 8; i++){
-				this.roomSquares.add(new Location('D', i));
+				this.roomSquares.add(new Location('d', i));
 			}
 			for ( int i = 2; i < 8; i++){
-				this.roomSquares.add(new Location('E', i));
+				this.roomSquares.add(new Location('e', i));
 			}
 			for ( int i = 3; i < 8; i++){
-				this.roomSquares.add(new Location('F', i));
+				this.roomSquares.add(new Location('f', i));
 			}
 		}
 			
 		if (this.roomName == "Dining Room"){
 			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('A', i));
+				this.roomSquares.add(new Location('a', i));
 			}
 			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('B', i));
+				this.roomSquares.add(new Location('b', i));
 			}
 			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('C', i));
+				this.roomSquares.add(new Location('c', i));
 			}
 			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('D', i));
+				this.roomSquares.add(new Location('d', i));
 			}
 			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('E', i));
+				this.roomSquares.add(new Location('e', i));
 			}
 			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('F', i));
+				this.roomSquares.add(new Location('f', i));
 			}
 			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('G', i));
+				this.roomSquares.add(new Location('g', i));
 			}
 			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('H', i));
+				this.roomSquares.add(new Location('h', i));
 			}
 		}
 		if (this.roomName == "Lounge"){
 			for ( int i = 21; i < 26; i++){
-				this.roomSquares.add(new Location('A', i));
+				this.roomSquares.add(new Location('a', i));
 			}
 			for ( int i = 20; i < 26; i++){
-				this.roomSquares.add(new Location('B', i));
+				this.roomSquares.add(new Location('b', i));
 			}
 			for ( int i = 20; i < 26; i++){
-				this.roomSquares.add(new Location('C', i));
+				this.roomSquares.add(new Location('c', i));
 			}
 			for ( int i = 20; i < 26; i++){
-				this.roomSquares.add(new Location('D', i));
+				this.roomSquares.add(new Location('d', i));
 			}
 			for ( int i = 20; i < 26; i++){
-				this.roomSquares.add(new Location('E', i));
+				this.roomSquares.add(new Location('e', i));
 			}
 			for ( int i = 20; i < 26; i++){
-				this.roomSquares.add(new Location('F', i));
+				this.roomSquares.add(new Location('f', i));
 			}
 			for ( int i = 20; i < 25; i++){
-				this.roomSquares.add(new Location('G', i));
+				this.roomSquares.add(new Location('g', i));
 			}
 		}
 		
 		if (this.roomName == "Ball Room"){
 			for ( int i = 3; i < 9; i++){
-				this.roomSquares.add(new Location('I', i));
+				this.roomSquares.add(new Location('i', i));
 			}
 			for ( int i = 3; i < 9; i++){
-				this.roomSquares.add(new Location('J', i));
+				this.roomSquares.add(new Location('j', i));
 			}
 			for ( int i = 2; i < 9; i++){
-				this.roomSquares.add(new Location('K', i));
+				this.roomSquares.add(new Location('k', i));
 			}
 			for ( int i = 2; i < 9; i++){
-				this.roomSquares.add(new Location('L', i));
+				this.roomSquares.add(new Location('l', i));
 			}
 			for ( int i = 2; i < 9; i++){
-				this.roomSquares.add(new Location('M', i));
+				this.roomSquares.add(new Location('m', i));
 			}
 			for ( int i = 2; i < 9; i++){
-				this.roomSquares.add(new Location('N', i));
+				this.roomSquares.add(new Location('n', i));
 			}
 			for ( int i = 2; i < 9; i++){
-				this.roomSquares.add(new Location('O', i));
+				this.roomSquares.add(new Location('o', i));
 			}
 			for ( int i = 3; i < 9; i++){
-				this.roomSquares.add(new Location('P', i));
+				this.roomSquares.add(new Location('p', i));
 			}
 			for ( int i = 3; i < 9; i++){
-				this.roomSquares.add(new Location('Q', i));
+				this.roomSquares.add(new Location('q', i));
 			}
 		}
 		

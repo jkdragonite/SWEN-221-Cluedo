@@ -124,9 +124,9 @@ public class GameOfCluedo {
 	}
 	
 	public void makeSuggestion(Player player, String character, String room, String weapon) throws GameError{
-//		if(!board.isInRoom(room, player.getLocation())){
-//			throw new GameError("Player is not in the correct location: please move to the " + room + "to make this suggestion");
-//		}
+		if(!board.isInRoom(player.getLocation())){
+			throw new GameError("Player is not in the correct location: please move to the " + room + "to make this suggestion");
+		}
 		if(player.getRoom().getName() != room){
 		throw new GameError("Player is not in the correct location: please move to the " + room + "to make this suggestion");
 	}
@@ -224,6 +224,7 @@ public class GameOfCluedo {
 			return prevPlayer+1;
 		}
 	}
+	
 	/**
 	 * Clears and then prints all base information to the output. 
 	 * Takes a boolean which is true when this method is called from the makeSuggestion
@@ -250,28 +251,57 @@ public class GameOfCluedo {
 			switch(players.get(i).getToken()){
 			case MissScarlett:
 				currentKey[15] = (char) (i+49);
+				break;
 			case ColonelMustard:
 				currentKey[36] = (char) (i+49);
+				break;
 			case ProfessorPlum:
 				currentKey[109] = (char) (i+49);
+				break;
 			case MrsWhite:
 				currentKey[51] = (char) (i+49);
+				break;
 			case ReverendGreen:
 				currentKey[71] = (char) (i+49);
+				break;
 			case MrsPeacock:
-				currentKey[89] = (char) (i+49);
+				currentKey[90] = (char) (i+49);
+				break;
 			}
 		}
 		return String.valueOf(currentKey);
 	}
 	
 	/**
-	 * Returns the set of cards that make up the solution. Used mainly in tests case
+	 * Returns the set of cards that make up the solution. Used mainly in test cases
 	 * @return
 	 */
 	public ArrayList<Card> getSolution(){
 		return solution;
 	}
+	
+	public int checkActivePlayers(){
+		int count = 0; 
+		for(Player p : players){
+			if(p.isActive()){
+				count++;
+			}
+		}
+		
+		if(count < 2){
+			gameWon = true;
+		}
+		return count;
+	}
+	
+	/**
+	 * Adds a given solution to the game. Used only for testing purposes
+	 * @param solution
+	 */
+	public void addSolution(ArrayList<Card> solution){
+		this.solution = solution;
+	}
+
 	
 	/**
 	 * Indicates an attempted action is in error of game logic.

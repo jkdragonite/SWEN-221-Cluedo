@@ -65,6 +65,10 @@ public class Player {
 		activePlayer = false;
 	}
 	
+	public boolean isActive(){
+		return activePlayer;
+	}
+	
 	/**
 	 * Basic method used in construction of a character returning their 
 	 * set start location.

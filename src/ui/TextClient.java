@@ -80,7 +80,13 @@ public class TextClient {
 	}
 	//confirmation from player method
 	public String getYNResponse(){
-		return "you didn't implement this yet ya silly";
+		if(in.hasNext(CONFIRMPAT) || in.hasNext(REFUSEPAT)){
+			return in.next();
+		}
+		else{
+			out.println("You are required to type 'yes' or 'no'. Please do so.");
+			return getYNResponse();
+		}
 	}
 	
 	public boolean getConfirm(){

@@ -61,12 +61,16 @@ public class Main {
 			}
 			else if (textClient.getInt() == 2){
 				game.dealCards();
+				game.generateCharacterKey();
 				setup = false;
 				gameInProgress = true;
 			}
 		}
-		while (gameInProgress){
-			
+		while (gameInProgress && !game.gameWon){
+			if(game.checkActivePlayers() == 1){
+				game.gameWon = true;
+				gameInProgress = false;
+			}
 			for (Player player : game.getPlayers()){
 				Boolean playerTurnBoolean = true;
 				while (playerTurnBoolean){
@@ -117,18 +121,24 @@ public class Main {
 						String room = textClient.getRoom();
 						textClient.println("\nPlease type a weapon");
 						String weapon = textClient.getWeapon();
-						game.makeAccusation(player, character, room, weapon);
+						game.gameWon = game.makeAccusation(player, character, room, weapon);
 					}
 					
 					if (textClient.getInt() == 3){
-						textClient.println("\nYou have chosen to make an accusation");
+						textClient.println("\nYou have chosen to make a suggestion");
 						textClient.println("\nPlease type a character");
 						String character = textClient.getCharacter();
 						textClient.println("\nPlease type a room");
 						String room = textClient.getRoom();
 						textClient.println("\nPlease type a weapon");
 						String weapon = textClient.getWeapon();
-						game.makeSuggestion(player, character, room, weapon);
+						try{
+							game.makeSuggestion(player, character, room, weapon);
+						}
+						catch(GameError ge){
+							textClient.println("Player turn over");
+							playerTurnBoolean = false;
+						}
 					}
 				}
 			}
