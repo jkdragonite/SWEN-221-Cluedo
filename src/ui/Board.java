@@ -252,9 +252,9 @@ public class Board {
 		}
 	}
 	
-	public boolean isInRoom(Location location){
+	public boolean isInRoom(Location location, Player player){
 		for (Room r : rooms){
-			if (r.isInRoom(location)){
+			if (r.isInRoom(location, player)){
 				return true;
 			}
 		}
@@ -290,7 +290,7 @@ public class Board {
 	
 	public void movePlayer(Player player, int x, int y){
 		for (Room room : rooms){
-			if (room.isInRoom(player.getLocation())){
+			if (room.isInRoom(player.getLocation(), player)){
 				room.removePlayer(player);
 				player.resetRoom();
 			}
@@ -303,7 +303,7 @@ public class Board {
 		this.boardSquares[y][x].setPlayer(player);
 		player.setLocation(new Location(charMap.get(x), y));
 		for (Room room : rooms){
-			if (room.isInRoom(player.getLocation())){
+			if (room.isInRoom(player.getLocation(), player)){
 				room.addPlayer(player);
 				player.setRoom(room);
 			}
@@ -341,7 +341,9 @@ public class Board {
 		return possibleMoves;
 	}
 	
-	
+	public Room[] getRooms(){
+		return rooms;
+	}
 	
 	
 	

@@ -41,7 +41,22 @@ public class TextClient {
 	
 	public String getCharacter(){
 		if(in.hasNext(CHARACTERPAT)){
-			return in.next(CHARACTERPAT);
+			switch(in.next(CHARACTERPAT)){
+			case("scarlett"):
+				return "Miss Scarlett";
+			case("mustard"):
+				return "Colonel Mustard";
+			case("white"):
+				return "Mrs. White";
+			case("green"):
+				return "Reverend Green";
+			case("peacock"):
+				return "Mrs. Peacock";
+			case("plum"):
+				return "Professor Plum";
+			default: 
+				return new String();
+			}
 		}
 		else{
 			out.println("The string you entered for the character was invalid: please enter the character's last name below (in lowercase letters).");

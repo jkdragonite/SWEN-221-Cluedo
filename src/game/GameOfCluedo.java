@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import ui.Board;
+import ui.Room;
 import ui.TextClient;
 
 public class GameOfCluedo {
@@ -124,11 +125,11 @@ public class GameOfCluedo {
 	}
 	
 	public void makeSuggestion(Player player, String character, String room, String weapon) throws GameError{
-		if(!board.isInRoom(player.getLocation())){
-			throw new GameError("Player is not in the correct location: please move to the " + room + "to make this suggestion");
+		if(!board.isInRoom(player.getLocation(), player)){
+			throw new GameError("Player is not in the correct location (by location): please move to the " + room + " to make this suggestion");
 		}
-		if(player.getRoom().getName() != room){
-		throw new GameError("Player is not in the correct location: please move to the " + room + "to make this suggestion");
+		if(!player.getRoom().getName().equalsIgnoreCase(room)){
+		throw new GameError("Player is not in the correct location (by room name): please move to the " + room + " to make this suggestion");
 	}
 		
 		//move relevant objects to the room
@@ -136,13 +137,15 @@ public class GameOfCluedo {
 		//board move searches the room 
 		
 		//check if players can refute the suggestion one at a time
-		int nextPlayerNum = getNextPlayer(currentPlayer);
+		int nextPlayerNum = getNextPlayer(currentPlayer-1);
 		Player nextPlayer = players.get(nextPlayerNum);
 		
 		boolean refuted = false;
 		Set<Card> refuteCards;
-		for(Player p = nextPlayer; !refuted || !p.equals(players.get(currentPlayer)); p = players.get(getNextPlayer(nextPlayerNum))){
+		for(Player p = nextPlayer; !refuted || !p.equals(players.get(currentPlayer-1)); p = players.get(getNextPlayer(nextPlayerNum-1))){
+			System.out.println("Player: " + p.getToken() + "'s turn");
 			nextPlayerNum = getNextPlayer(nextPlayerNum);
+			System.out.println(nextPlayerNum);
 			refuteCards = p.getHand().findMatches(character, weapon, room);
 			
 			if(!refuteCards.isEmpty()){
@@ -217,7 +220,7 @@ public class GameOfCluedo {
 	}
 	
 	private int getNextPlayer(int prevPlayer){
-		if(prevPlayer == players.size()){
+		if(prevPlayer >= players.size()){
 			return 1;
 		}
 		else{
@@ -302,6 +305,13 @@ public class GameOfCluedo {
 		this.solution = solution;
 	}
 
+	/**
+	 * Returns the set of Room instances used in the game, for testing purposes only.
+	 * @return
+	 */
+	public Room[] getRooms(){
+		return board.getRooms();
+	}
 	
 	/**
 	 * Indicates an attempted action is in error of game logic.

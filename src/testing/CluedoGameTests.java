@@ -4,6 +4,7 @@ import org.junit.*;
 
 import game.*;
 import game.GameOfCluedo.GameError;
+import ui.Room;
 
 import static org.junit.Assert.*;
 import java.util.*;
@@ -125,12 +126,41 @@ public class CluedoGameTests {
 	}
 	
 	@Test
+	public void testFindMatches_1(){
+		//tests that find matches returns cards when it should
+		GameOfCluedo game = initRiggedGame();
+		try{
+			Player one = game.getPlayer(1);
+			Hand hand = one.getHand();
+			Set<Card> matches = hand.findMatches("Mrs. Peacock", "Lead Pipe", "Ballroom");
+			assertEquals(matches.size(), 3);
+		}
+		catch(GameError ge){
+			fail(ge.getMessage());
+		}
+	}
+	
+	@Test
 	public void makeValidSuggestion_1(){
 		//tests that the correct protocols are observed when the player makes a refutable suggestion,
 		//i.e. player is in room, suggestion is refuted by correct player, turn ends as it should
 		GameOfCluedo game = initRiggedGame();
 		
-		//find out which player has 
+		//move player one into the room they want to suggest in before calling make suggestion
+		//player three has all these cards in the suggestion
+		try{
+			Player one = game.getPlayer(1);
+			
+			one.setLocation(new Location('k', 25));
+			Room[] rooms = game.getRooms();
+			one.setRoom(rooms[7]);
+			rooms[7].addPlayer(one);
+			
+			game.makeSuggestion(one, "white", "hall", "dagger");
+		}
+		catch(GameError ge){
+			fail("Error: " + ge.getMessage());
+		}
 	}
 	
 	@Test

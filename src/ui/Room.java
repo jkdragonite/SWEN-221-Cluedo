@@ -49,8 +49,8 @@ public class Room extends Square {
 		this.playersInside.remove(player);
 	}
 	
-	public boolean isInRoom(Location location){
-		return roomSquares.contains(location);
+	public boolean isInRoom(Location location, Player player){
+		return roomSquares.contains(location) || playersInside.contains(player);
 	}
 	
 	public GameOfCluedo.Weapon containsWeapon(){
