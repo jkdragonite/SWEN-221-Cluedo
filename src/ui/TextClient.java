@@ -12,8 +12,8 @@ import java.util.regex.Pattern;
 public class TextClient {
 	//wanted to make TextClient a UI of sorts which manages ONLY input and output, 
 	//and validation of inputs when requested by the game class.
-	Scanner in;
-	PrintStream out;
+	public Scanner in;
+	public PrintStream out;
 	
 	public TextClient(){
 		in = new Scanner(System.in);

@@ -12,10 +12,11 @@ public class Room extends Square {
 	// mucking about with square ideas
 	
 	private List<Player> playersInside = new ArrayList<Player>();
-	private GameOfCluedo.Weapon weapon = null;
+	private String weapon = null;
 	private String roomName;
-	private ArrayList<Location> roomSquares = new ArrayList<>();
+	public ArrayList<Location> roomSquares = new ArrayList<>();
 	private Stairs stairs = null; 
+	private ArrayList<Door> doors = new ArrayList<>();
 	
 	/**
 	 * Creates an new instance of a room with the specified name, and list of encompassing locations. 
@@ -25,7 +26,7 @@ public class Room extends Square {
 	 * @param weapon contained in the room, if any
 	 * @param roomSquares list of locations on the board that this room covers
 	 */	
-	public Room(String name, GameOfCluedo.Weapon weapon){
+	public Room(String name, String weapon){
 		roomName = name;
 		this.weapon = weapon;
 		setSquares();
@@ -53,12 +54,17 @@ public class Room extends Square {
 		return roomSquares.contains(location) || playersInside.contains(player);
 	}
 	
-	public GameOfCluedo.Weapon containsWeapon(){
-		return weapon;
+	public boolean containsWeapon(String string){
+		return this.weapon == string;
 	}
 	
-	public void setWeapon(GameOfCluedo.Weapon weapon){
+	public void setWeapon(String weapon){
 		this.weapon = weapon;
+	}
+	
+	public String getWeapon() {
+		return this.weapon;
+		
 	}
 	
 	public String getName(){
@@ -78,220 +84,234 @@ public class Room extends Square {
 		return "r";
 	}
 	
+	public ArrayList<Door> getDoors(){
+		return this.doors;
+	}
+	
+	public void addDoor(Door door){
+		this.doors.add(door);
+	}
+	
+
+	
 	public void setSquares(){
 		if (this.roomName == "Kitchen"){
+			for ( int i = 1; i < 6; i++){
+				this.roomSquares.add(new Location(0, i));
+			}
+			for ( int i = 1; i < 7; i++){
+				this.roomSquares.add(new Location(1, i));
+			}
+			for ( int i = 1; i < 7; i++){
+				this.roomSquares.add(new Location(2, i));
+			}
+			for ( int i = 1; i < 7; i++){
+				this.roomSquares.add(new Location(3, i));
+			}
+			for ( int i = 1; i < 7; i++){
+				this.roomSquares.add(new Location(4, i));
+			}
 			for ( int i = 2; i < 7; i++){
-				this.roomSquares.add(new Location('a', i));
-			}
-			for ( int i = 2; i < 8; i++){
-				this.roomSquares.add(new Location('b', i));
-			}
-			for ( int i = 2; i < 8; i++){
-				this.roomSquares.add(new Location('c', i));
-			}
-			for ( int i = 2; i < 8; i++){
-				this.roomSquares.add(new Location('d', i));
-			}
-			for ( int i = 2; i < 8; i++){
-				this.roomSquares.add(new Location('e', i));
-			}
-			for ( int i = 3; i < 8; i++){
-				this.roomSquares.add(new Location('f', i));
+				this.roomSquares.add(new Location(5, i));
 			}
 		}
 			
 		if (this.roomName == "Dining Room"){
-			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('a', i));
+			for ( int i = 9; i < 16; i++){
+				this.roomSquares.add(new Location(0, i));
 			}
-			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('b', i));
+			for ( int i = 9; i < 16; i++){
+				this.roomSquares.add(new Location(1, i));
 			}
-			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('c', i));
+			for ( int i = 9; i < 16; i++){
+				this.roomSquares.add(new Location(2, i));
 			}
-			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('d', i));
+			for ( int i = 9; i < 16; i++){
+				this.roomSquares.add(new Location(3, i));
 			}
-			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('e', i));
+			for ( int i = 9; i < 16; i++){
+				this.roomSquares.add(new Location(4, i));
 			}
-			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('f', i));
+			for ( int i = 10; i < 16; i++){
+				this.roomSquares.add(new Location(5, i));
 			}
-			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('g', i));
+			for ( int i = 10; i < 16; i++){
+				this.roomSquares.add(new Location(6, i));
 			}
-			for ( int i = 10; i < 17; i++){
-				this.roomSquares.add(new Location('h', i));
+			for ( int i = 10; i < 16; i++){
+				this.roomSquares.add(new Location(7, i));
 			}
 		}
 		if (this.roomName == "Lounge"){
-			for ( int i = 21; i < 26; i++){
-				this.roomSquares.add(new Location('a', i));
-			}
-			for ( int i = 20; i < 26; i++){
-				this.roomSquares.add(new Location('b', i));
-			}
-			for ( int i = 20; i < 26; i++){
-				this.roomSquares.add(new Location('c', i));
-			}
-			for ( int i = 20; i < 26; i++){
-				this.roomSquares.add(new Location('d', i));
-			}
-			for ( int i = 20; i < 26; i++){
-				this.roomSquares.add(new Location('e', i));
-			}
-			for ( int i = 20; i < 26; i++){
-				this.roomSquares.add(new Location('f', i));
-			}
 			for ( int i = 20; i < 25; i++){
-				this.roomSquares.add(new Location('g', i));
+				this.roomSquares.add(new Location(0, i));
+			}
+			for ( int i = 19; i < 25; i++){
+				this.roomSquares.add(new Location(1, i));
+			}
+			for ( int i = 19; i < 25; i++){
+				this.roomSquares.add(new Location(2, i));
+			}
+			for ( int i = 19; i < 25; i++){
+				this.roomSquares.add(new Location(3, i));
+			}
+			for ( int i = 19; i < 25; i++){
+				this.roomSquares.add(new Location(4, i));
+			}
+			for ( int i = 19; i < 25; i++){
+				this.roomSquares.add(new Location(5, i));
+			}
+			for ( int i = 19; i < 25; i++){
+				this.roomSquares.add(new Location(6, i));
 			}
 		}
 		
 		if (this.roomName == "Ball Room"){
-			for ( int i = 3; i < 9; i++){
-				this.roomSquares.add(new Location('i', i));
+			for ( int i = 2; i < 8; i++){
+				this.roomSquares.add(new Location(8, i));
 			}
-			for ( int i = 3; i < 9; i++){
-				this.roomSquares.add(new Location('j', i));
+			for ( int i = 2; i < 8; i++){
+				this.roomSquares.add(new Location(9, i));
 			}
-			for ( int i = 2; i < 9; i++){
-				this.roomSquares.add(new Location('k', i));
+			for ( int i = 1; i < 8; i++){
+				this.roomSquares.add(new Location(10, i));
 			}
-			for ( int i = 2; i < 9; i++){
-				this.roomSquares.add(new Location('l', i));
+			for ( int i = 1; i < 8; i++){
+				this.roomSquares.add(new Location(11, i));
 			}
-			for ( int i = 2; i < 9; i++){
-				this.roomSquares.add(new Location('m', i));
+			for ( int i = 1; i < 8; i++){
+				this.roomSquares.add(new Location(12, i));
 			}
-			for ( int i = 2; i < 9; i++){
-				this.roomSquares.add(new Location('n', i));
+			for ( int i = 1; i < 8; i++){
+				this.roomSquares.add(new Location(13, i));
 			}
-			for ( int i = 2; i < 9; i++){
-				this.roomSquares.add(new Location('o', i));
+			for ( int i = 1; i < 8; i++){
+				this.roomSquares.add(new Location(14, i));
 			}
-			for ( int i = 3; i < 9; i++){
-				this.roomSquares.add(new Location('p', i));
+			for ( int i = 2; i < 8; i++){
+				this.roomSquares.add(new Location(15, i));
 			}
-			for ( int i = 3; i < 9; i++){
-				this.roomSquares.add(new Location('q', i));
+			for ( int i = 2; i < 8; i++){
+				this.roomSquares.add(new Location(16, i));
 			}
 		}
 		
 		if (this.roomName == "Hall"){
-			for ( int i = 19; i < 26; i++){
-				this.roomSquares.add(new Location('J', i));
+			for ( int i = 18; i < 25; i++){
+				this.roomSquares.add(new Location(9, i));
 			}
-			for ( int i = 19; i < 26; i++){
-				this.roomSquares.add(new Location('K', i));
+			for ( int i = 18; i < 25; i++){
+				this.roomSquares.add(new Location(10, i));
 			}
-			for ( int i = 19; i < 26; i++){
-				this.roomSquares.add(new Location('L', i));
+			for ( int i = 18; i < 25; i++){
+				this.roomSquares.add(new Location(11, i));
 			}
-			for ( int i = 19; i < 26; i++){
-				this.roomSquares.add(new Location('M', i));
+			for ( int i = 18; i < 25; i++){
+				this.roomSquares.add(new Location(12, i));
 			}
-			for ( int i = 19; i < 26; i++){
-				this.roomSquares.add(new Location('N', i));
+			for ( int i = 18; i < 25; i++){
+				this.roomSquares.add(new Location(13, i));
 			}
-			for ( int i = 19; i < 26; i++){
-				this.roomSquares.add(new Location('O', i));
+			for ( int i = 18; i < 25; i++){
+				this.roomSquares.add(new Location(14, i));
 			}
-			for ( int i = 19; i < 26; i++){
-				this.roomSquares.add(new Location('P', i));
+			for ( int i = 18; i < 25; i++){
+				this.roomSquares.add(new Location(15, i));
 			}
 		}
 		
 		if (this.roomName == "Conservatory"){
-			for ( int i = 2; i < 6; i++){
-				this.roomSquares.add(new Location('T', i));
+			for ( int i = 1; i < 5; i++){
+				this.roomSquares.add(new Location(19, i));
 			}
-			for ( int i = 2; i < 7; i++){
-				this.roomSquares.add(new Location('U', i));
+			for ( int i = 1; i < 6; i++){
+				this.roomSquares.add(new Location(20, i));
 			}
-			for ( int i = 2; i < 7; i++){
-				this.roomSquares.add(new Location('V', i));
+			for ( int i = 1; i < 6; i++){
+				this.roomSquares.add(new Location(21, i));
 			}
-			for ( int i = 2; i < 7; i++){
-				this.roomSquares.add(new Location('W', i));
+			for ( int i = 1; i < 6; i++){
+				this.roomSquares.add(new Location(22, i));
 			}
-			for ( int i = 2; i < 7; i++){
-				this.roomSquares.add(new Location('X', i));
+			for ( int i = 1; i < 5; i++){
+				this.roomSquares.add(new Location(23, i));
 			}
-			for ( int i = 2; i < 7; i++){
-				this.roomSquares.add(new Location('Y', i));
+			for ( int i = 1; i < 5; i++){
+				this.roomSquares.add(new Location(24, i));
 			}
 		}
+		
+		
 		if (this.roomName == "Billiard Room"){
-			for ( int i = 9; i < 14; i++){
-				this.roomSquares.add(new Location('T', i));
+			for ( int i = 8; i < 13; i++){
+				this.roomSquares.add(new Location(19, i));
 			}
-			for ( int i = 9; i < 14; i++){
-				this.roomSquares.add(new Location('U', i));
+			for ( int i = 8; i < 13; i++){
+				this.roomSquares.add(new Location(20, i));
 			}
-			for ( int i = 9; i < 14; i++){
-				this.roomSquares.add(new Location('V', i));
+			for ( int i = 8; i < 13; i++){
+				this.roomSquares.add(new Location(21, i));
 			}
-			for ( int i = 9; i < 14; i++){
-				this.roomSquares.add(new Location('W', i));
+			for ( int i = 8; i < 13; i++){
+				this.roomSquares.add(new Location(22, i));
 			}
-			for ( int i = 9; i < 14; i++){
-				this.roomSquares.add(new Location('X', i));
+			for ( int i = 8; i < 13; i++){
+				this.roomSquares.add(new Location(23, i));
 			}
-			for ( int i = 9; i < 14; i++){
-				this.roomSquares.add(new Location('Y', i));
+			for ( int i = 8; i < 13; i++){
+				this.roomSquares.add(new Location(24, i));
 			}
 		}					
+		
 		if (this.roomName == "Library"){
-			for ( int i = 16; i < 19; i++){
-				this.roomSquares.add(new Location('S', i));
+			for ( int i = 15; i < 18; i++){
+				this.roomSquares.add(new Location(18, i));
 			}						
-			for ( int i = 15; i < 20; i++){
-				this.roomSquares.add(new Location('T', i));
+			for ( int i = 14; i < 19; i++){
+				this.roomSquares.add(new Location(19, i));
 			}
-			for ( int i = 15; i < 20; i++){
-				this.roomSquares.add(new Location('U', i));
+			for ( int i = 14; i < 19; i++){
+				this.roomSquares.add(new Location(20, i));
 			}
-			for ( int i = 15; i < 20; i++){
-				this.roomSquares.add(new Location('V', i));
+			for ( int i = 14; i < 19; i++){
+				this.roomSquares.add(new Location(21, i));
 			}
-			for ( int i = 15; i < 20; i++){
-				this.roomSquares.add(new Location('W', i));
+			for ( int i = 14; i < 19; i++){
+				this.roomSquares.add(new Location(22, i));
 			}
-			for ( int i = 15; i < 20; i++){
-				this.roomSquares.add(new Location('X', i));
+			for ( int i = 14; i < 19; i++){
+				this.roomSquares.add(new Location(23, i));
 			}
-			for ( int i = 16; i < 19; i++){
-				this.roomSquares.add(new Location('Y', i));
+			for ( int i = 15; i < 18; i++){
+				this.roomSquares.add(new Location(24, i));
 			}
 		}						
 		if (this.roomName == "Study"){
-			for ( int i = 22; i < 26; i++){
-				this.roomSquares.add(new Location('S', i));
+			for ( int i = 21; i < 25; i++){
+				this.roomSquares.add(new Location(18, i));
 			}						
-			for ( int i = 22; i < 26; i++){
-				this.roomSquares.add(new Location('T', i));
+			for ( int i = 21; i < 25; i++){
+				this.roomSquares.add(new Location(19, i));
 			}
-			for ( int i = 22; i < 26; i++){
-				this.roomSquares.add(new Location('U', i));
+			for ( int i = 21; i < 25; i++){
+				this.roomSquares.add(new Location(20, i));
 			}
-			for ( int i = 22; i < 26; i++){
-				this.roomSquares.add(new Location('V', i));
+			for ( int i = 21; i < 25; i++){
+				this.roomSquares.add(new Location(21, i));
 			}
-			for ( int i = 22; i < 26; i++){
-				this.roomSquares.add(new Location('W', i));
+			for ( int i = 21; i < 25; i++){
+				this.roomSquares.add(new Location(22, i));
 			}
-			for ( int i = 22; i < 26; i++){
-				this.roomSquares.add(new Location('X', i));
+			for ( int i = 21; i < 25; i++){
+				this.roomSquares.add(new Location(23, i));
 			}
-			for ( int i = 22; i < 26; i++){
-				this.roomSquares.add(new Location('Y', i));
+			for ( int i = 22; i < 25; i++){
+				this.roomSquares.add(new Location(24, i));
 			}
 		}	
 	}
 
 	//stairs
 	
+
 }

@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.sun.xml.internal.fastinfoset.util.CharArray;
+
 import game.Location;
 import game.Player;
 
 public class Board {
 	
-	public Map<Integer, Character> charMap = new HashMap<Integer, Character>();
 	private char[][] currentBoardArray;
 	private char[][] cleanBoard;
 	private Square[][] boardSquares = {{new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare(),new EmptySquare()
@@ -72,7 +73,6 @@ public class Board {
 	  
 	// using characters just to get started, will change to square instances later
 	public Board(){
-		makeMap();
 		
 		cleanBoard = new char[][]{
 				{'x','x','x','x','x','x','x','x','x','`','x','x','x','x','x','`','x','x','x','x','x','x','x','x','x'},
@@ -136,33 +136,12 @@ public class Board {
 	}
 	
 	
-	void makeMap(){
-		this.charMap.put(0, 'a');
-		this.charMap.put(1, 'b');
-		this.charMap.put(2, 'c');
-		this.charMap.put(3, 'd');
-		this.charMap.put(4, 'e');
-		this.charMap.put(5, 'f');
-		this.charMap.put(6, 'g');
-		this.charMap.put(7, 'h');
-		this.charMap.put(8, 'i');
-		this.charMap.put(9, 'j');
-		this.charMap.put(10, 'k');
-		this.charMap.put(11, 'l');
-		this.charMap.put(12, 'm');
-		this.charMap.put(13, 'n');
-		this.charMap.put(14, 'o');
-		this.charMap.put(15, 'p');
-		this.charMap.put(16, 'q');
-		this.charMap.put(17, 'r');
-		this.charMap.put(18, 's');
-		this.charMap.put(19, 't');
-		this.charMap.put(20, 'u');
-		this.charMap.put(21, 'v');
-		this.charMap.put(22, 'w');
-		this.charMap.put(23, 'x');
-		this.charMap.put(24, 'y');		
-	}
+	/**
+	 * 
+	 * Creates room instances and uses a set of loops to fill out the board 
+	 * 
+	 * 
+	 */
 	public void createBoard(){
 		for ( int i = 0; i < boardSquares.length; i ++){
 			for ( int j = 0; j < 25; j ++){
@@ -188,55 +167,21 @@ public class Board {
 		Room study = new Room("Study", null);
 		
 		
-		Stairs kitchenStairs = new Stairs(new Location('f', 1), kitchen, study); 
+		Stairs kitchenStairs = new Stairs(new Location(5, 1), kitchen, study); 
 		boardSquares[1][5] = kitchenStairs;
 		kitchen.setStairs(kitchenStairs);
 		
-		Stairs loungeStairs = new Stairs(new Location('A', 19), lounge, conservatory);
+		Stairs loungeStairs = new Stairs(new Location(0, 19), lounge, conservatory);
 		boardSquares[19][0] = loungeStairs;
 		lounge.setStairs(loungeStairs);
 		
-		Stairs conservatoryStairs = new Stairs(new Location('X', 5), conservatory, lounge);
+		Stairs conservatoryStairs = new Stairs(new Location(23, 5), conservatory, lounge);
 		boardSquares[5][23] = conservatoryStairs;
 		conservatory.setStairs(conservatoryStairs);
 		
-		Stairs studyStairs = new Stairs(new Location('Y', 5), study, kitchen);
+		Stairs studyStairs = new Stairs(new Location(24, 5), study, kitchen);
 		boardSquares[21][24] = studyStairs;
 		study.setStairs(studyStairs);
-		
-		
-		boardSquares[7][4] = new Door(kitchen);
-		
-		boardSquares[12][8] = new Door(diningRoom);
-		boardSquares[16][6] = new Door(diningRoom);
-		
-		boardSquares[18][6] = new Door(lounge);
-
-		boardSquares[5][7] = new Door(ballRoom);
-		boardSquares[8][9] = new Door(ballRoom);
-		boardSquares[5][17] = new Door(ballRoom);
-		boardSquares[8][15] = new Door(ballRoom);
-		
-		boardSquares[5][19] = new Door(conservatory);
-		
-		boardSquares[17][11] = new Door(hall);
-		boardSquares[17][12] = new Door(hall);
-		boardSquares[17][13] = new Door(hall);
-		boardSquares[20][16] = new Door(hall);
-		
-		boardSquares[20][18] = new Door(study);
-		
-		boardSquares[16][17] = new Door(library);
-		boardSquares[13][21] = new Door(library);
-
-		
-		boardSquares[9][18] = new Door(billiardRoom);
-		boardSquares[13][23] = new Door(billiardRoom);
-		
-		
-		
-		
-		
 		
 		
 		Room[] roomArray = {kitchen, ballRoom, conservatory, diningRoom, billiardRoom,
@@ -245,13 +190,56 @@ public class Board {
 		
 		for (Room room : roomArray){
 			for (Location location : room.getRoomSquares()){
-				Point point = location.getBoardCoOrd();
+				Point point = new Point(location.getXLoc(), location.getYLoc());
 				boardSquares[point.y][point.x] = room;
 			}
 			
 		}
+		
+		
+		boardSquares[6][4] = new Door(kitchen, new Location(4, 6));
+		kitchen.addDoor((Door) boardSquares[6][4]);
+		
+		boardSquares[12][7] = new Door(diningRoom, new Location(7,12));
+		diningRoom.addDoor((Door) boardSquares[12][7]);
+		boardSquares[15][6] = new Door(diningRoom, new Location(6,15));
+		diningRoom.addDoor((Door) boardSquares[15][6]);
+		
+		
+		boardSquares[19][6] = new Door(lounge, new Location(6,19));
+		diningRoom.addDoor((Door) boardSquares[19][6]);
+
+		boardSquares[5][8] = new Door(ballRoom, new Location(8,5));
+		boardSquares[7][9] = new Door(ballRoom, new Location(9,7));
+		boardSquares[5][16] = new Door(ballRoom, new Location(16,5));
+		boardSquares[7][15] = new Door(ballRoom, new Location(15,7));
+		
+		boardSquares[4][19] = new Door(conservatory, new Location(19,4));
+		
+		boardSquares[18][11] = new Door(hall, new Location(11,18));
+		boardSquares[18][12] = new Door(hall, new Location(12,18));
+		boardSquares[18][13] = new Door(hall, new Location(13,18));
+		boardSquares[20][15] = new Door(hall, new Location(15,20));
+		
+		boardSquares[21][18] = new Door(study, new Location(18,21));
+		
+		boardSquares[16][18] = new Door(library, new Location(18,16));
+		boardSquares[14][22] = new Door(library, new Location(22,14));
+
+		
+		boardSquares[9][19] = new Door(billiardRoom, new Location(19,9));
+		boardSquares[12][23] = new Door(billiardRoom, new Location(23,12));
+			
+
 	}
 	
+	/**
+	 * Takes a location and a player, and checks if the given location is within a room
+	 * 
+	 * @param location on board
+	 * @param player
+	 * @return boolean
+	 */
 	public boolean isInRoom(Location location, Player player){
 		for (Room r : rooms){
 			if (r.isInRoom(location, player)){
@@ -261,33 +249,136 @@ public class Board {
 		return false;
 	}
 	
-	
-	public String otherString(){
-		String boardState = "";
-		for (Square[] x : this.boardSquares){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-			boardState = boardState+"\n";
-			boardState = boardState + '|';
-			for (Square y : x){
-				boardState = boardState + y.toString();
-				boardState = boardState + '|';
+	/**
+	 * 
+	 * takes a list of players, and uses the information contained in the board arrays to construct a string representing the current
+	 * board state
+	 * 
+	 * @param list of players 
+	 * 
+	 * @return a string representing the board 
+	 */
+	public String toString(java.util.List<Player> list){
+		for (int i = 0; i < currentBoardArray.length; i++){
+			for (int j = 0; j < currentBoardArray[i].length; j++){
+				currentBoardArray[i][j] = cleanBoard[i][j];
 			}
 		}
-		return boardState;
-	}
-	
-	public String toString(){
 		String boardState = "";
-		for (char[] x : this.currentBoardArray){
+		
+		for (Room room : this.rooms){
+			// checks rooms for players, and adds the right character representation
+			if (room.getPlayers().isEmpty() == false){
+				for (int i = 0; i < room.getPlayers().size(); i++){
+					int x = room.roomSquares.get(i).getXLoc(); 
+					int y = room.roomSquares.get(i).getYLoc();
+					currentBoardArray[y][x] = room.getPlayers().get(i).toString().charAt(0);
+				}
+			}
+		}
+		
+		for (Player player : list){
+			// sets player location on board
+			int x = player.getLocation().getXLoc();
+			int y = player.getLocation().getYLoc();
+			currentBoardArray[y][x] = player.toString().charAt(0);
+		}
+		
+		for (Room room : this.rooms){
+			// finds weapons in each room and set the right character on the board
+			if (room.getWeapon() != null){
+				for (int i = 0; i < room.getPlayers().size(); i++){
+					int x = room.roomSquares.get(room.roomSquares.size()).getXLoc(); 
+					int y = room.roomSquares.get(room.roomSquares.size()).getYLoc();
+					if(room.getWeapon() == "spanner"){
+						currentBoardArray[y][x] = 'Y';	
+					}
+					if(room.getWeapon() == "rope"){
+						currentBoardArray[y][x] = '8';	
+					}
+					if(room.getWeapon() == "revolver"){
+						currentBoardArray[y][x] = 'F';	
+					}
+					if(room.getWeapon() == "lead pipe"){
+						currentBoardArray[y][x] = '/';	
+					}
+					if(room.getWeapon() == "dagger"){
+						currentBoardArray[y][x] = '!';	
+					}
+					if(room.getWeapon() == "candlestick"){
+						currentBoardArray[y][x] = 'I';	
+					}
+					
+				}
+			}
+		}
+		
+		for (char[] x : this.currentBoardArray){             
+			// finally, builds the string for the board
 			boardState = boardState+"\n";
 			boardState = boardState + '|';
 			for (char y : x){
-				boardState = boardState + y;
-				boardState = boardState + '|';
+
+					boardState = boardState + y;
+					boardState = boardState + '|';					
+				}
 			}
-		}
+		
 		return boardState;
 	}
 	
+	
+// old unneeded code
+//	public String toString(){
+//		String boardState = "";
+//		for (Square[] x : this.boardSquares){             
+//			String lastCharacterAdded = "";
+//			boardState = boardState+"\n";
+//			boardState = boardState + '|';
+//			for (Square y : x){
+//				if ( y instanceof Room){
+//					// check for weapons / players
+//					// check against last character
+//					// or make an array of room characters?
+//					// construct the array
+//					if (((Room) y).getPlayers().isEmpty() == false){
+//						boardState = boardState + ((Room) y).getPlayers().get(0).toString();
+//						boardState = boardState + '|';		
+//					}
+//					else{
+//						boardState = boardState + y.toString();
+//						boardState = boardState + '|';					
+//					}
+//				}
+//				else{
+//					boardState = boardState + y.toString();
+//					boardState = boardState + '|';					
+//				}
+//			}
+//		}
+//		return boardState;
+//	}
+	
+	
+	/**
+	 * Sets a player's location on the board
+	 * 
+	 * @param player
+	 * @param x coordinate
+	 * @param y coordinate
+	 */
+	public void setPlayer(Player player, int x, int y){
+		this.boardSquares[y][x].setPlayer(player);
+	}
+	
+	/**
+	 * Moves a player to the new x/y coordinate on the board
+	 * Adds/removes player to/from room if necessary 
+	 * 
+	 * @param player
+	 * @param x coordinate
+	 * @param y coordinate
+	 */
 	public void movePlayer(Player player, int x, int y){
 		for (Room room : rooms){
 			if (room.isInRoom(player.getLocation(), player)){
@@ -295,62 +386,114 @@ public class Board {
 				player.resetRoom();
 			}
 		}				
-		Point point =  player.getLocation().getBoardCoOrd();
+		Point point = new Point(player.getLocation().getXLoc(), player.getLocation().getYLoc());
 		int currentY = point.y;
 		int currentX = point.x;
 		// add player to empty square / room
 		this.boardSquares[currentY][currentX].removePlayer();
 		this.boardSquares[y][x].setPlayer(player);
-		player.setLocation(new Location(charMap.get(x), y));
+		///////
+		player.setLocation(new Location(x, y));
 		for (Room room : rooms){
 			if (room.isInRoom(player.getLocation(), player)){
 				room.addPlayer(player);
 				player.setRoom(room);
 			}
 		}
+		if (this.boardSquares[y][x] instanceof Door){
+			Door door = (Door) boardSquares[y][x];
+			player.setRoom(door.getRoom());
+			door.getRoom().addPlayer(player);
+		}
 	}
 	
+	/**
+	 * takes a player and checks the four movable directions for legal moves
+	 * adds a special move for leaving a room, if applicable
+	 * 
+	 * @param player
+	 * @return map of moves with their corresponding locations
+	 */
 	public Map<String, Location> getMoves(Player player){
-		// this is gonna be wrong because of the getlocaiton stuff
-//		ArrayList<Location> playerMoves = new ArrayList<Location>();
-//		ArrayList<String> moves = new ArrayList<String>(); 
+		
+
 		Map<String, Location> possibleMoves = new HashMap<String, Location>();
-		// if instance of room add move for room
-
-		if (boardSquares[player.getLocation().getBoardCoOrd().y-1][player.getLocation().getBoardCoOrd().x] instanceof EmptySquare || 
-				boardSquares[player.getLocation().getBoardCoOrd().y-1][player.getLocation().getBoardCoOrd().x] instanceof Door ||
-				boardSquares[player.getLocation().getBoardCoOrd().y-1][player.getLocation().getBoardCoOrd().x] instanceof Room){
-			possibleMoves.put("Move Up", new Location(charMap.get(player.getLocation().getBoardCoOrd().x), player.getLocation().getBoardCoOrd().y-1));
+		Point upPoint = new Point(player.getLocation().getXLoc(), player.getLocation().getYLoc()-1);
+//		System.out.println("up"+upPoint);
+		if (upPoint.x > -1 && upPoint.x < 25 && upPoint.y > -1 && upPoint.y < 25){
+			if (boardSquares[upPoint.y][upPoint.x] instanceof EmptySquare || 
+					boardSquares[upPoint.y][upPoint.x] instanceof Door){
+				possibleMoves.put("Move Up", new Location(upPoint.x, upPoint.y));
+			}			
 		}
-		if (boardSquares[player.getLocation().getBoardCoOrd().y+1][player.getLocation().getBoardCoOrd().x] instanceof EmptySquare || 
-				boardSquares[player.getLocation().getBoardCoOrd().y+1][player.getLocation().getBoardCoOrd().x] instanceof Door ||
-				boardSquares[player.getLocation().getBoardCoOrd().y+1][player.getLocation().getBoardCoOrd().x] instanceof Room){
-			possibleMoves.put("Move Down", new Location(charMap.get(player.getLocation().getBoardCoOrd().x), player.getLocation().getBoardCoOrd().y+1));
+		Point downPoint = new Point(player.getLocation().getXLoc(), player.getLocation().getYLoc()+1);
+//		System.out.println("down"+downPoint);
+		if (downPoint.x > -1 && downPoint.x < 25 && downPoint.y > -1 && downPoint.y < 25){
+			if (boardSquares[downPoint.y][downPoint.x] instanceof EmptySquare || 
+					boardSquares[downPoint.y][downPoint.x] instanceof Door){
+				possibleMoves.put("Move Down", new Location(player.getLocation().getXLoc(), player.getLocation().getYLoc()+1));
+			}	
+		}
+		Point leftPoint = new Point(player.getLocation().getXLoc()-1, player.getLocation().getYLoc());
+//		System.out.println("left"+leftPoint);
+		if (leftPoint.x > -1 && leftPoint.x < 25 && leftPoint.y > -1 && leftPoint.y < 25){
+			if (boardSquares[leftPoint.y][leftPoint.x] instanceof EmptySquare || 
+				boardSquares[leftPoint.y][leftPoint.x] instanceof Door){
+				possibleMoves.put("Move Left", new Location(player.getLocation().getXLoc()-1, player.getLocation().getYLoc()));
+			}
+		}
+		Point rightPoint = new Point(player.getLocation().getXLoc()+1, player.getLocation().getYLoc());
+//		System.out.println(rightPoint);
+		if (rightPoint.x > -1 && rightPoint.x < 25 && rightPoint.y > -1 && rightPoint.y < 25){
+			if (boardSquares[rightPoint.y][rightPoint.x] instanceof EmptySquare || 
+					boardSquares[rightPoint.y][rightPoint.x] instanceof Door){
+				possibleMoves.put("Move Right", new Location(player.getLocation().getXLoc()+1, player.getLocation().getYLoc()));
+			}
+		}
+		
+		if (player.getRoom() != null){
+			Point doorLocUp = new Point(player.getRoom().getDoors().get(0).getLocation().getXLoc(), player.getRoom().getDoors().get(0).getLocation().getYLoc()-1);
+//			System.out.println("up"+upPoint);
+			if (doorLocUp.x > -1 && doorLocUp.x < 25 && doorLocUp.y > -1 && doorLocUp.y < 25){
+				if (boardSquares[doorLocUp.y][doorLocUp.x] instanceof EmptySquare){
+					possibleMoves.put("Exit Room", new Location(doorLocUp.x, doorLocUp.y));
+				}			
+			}
+			Point doorLocDown = new Point(player.getRoom().getDoors().get(0).getLocation().getXLoc(), player.getRoom().getDoors().get(0).getLocation().getYLoc()+1);
+//			System.out.println("down"+downPoint);
+			if (doorLocDown.x > -1 && doorLocDown.x < 25 && doorLocDown.y > -1 && doorLocDown.y < 25){
+				if (boardSquares[doorLocDown.y][doorLocDown.x] instanceof EmptySquare){
+					possibleMoves.put("Exit Room", new Location(doorLocDown.x, doorLocDown.y+1));
+				}	
+			}
+			Point doorLocLeft = new Point(player.getRoom().getDoors().get(0).getLocation().getXLoc()-1, player.getRoom().getDoors().get(0).getLocation().getYLoc());
+//			System.out.println("left"+leftPoint);
+			if (doorLocLeft.x > -1 && doorLocLeft.x < 25 && doorLocLeft.y > -1 && doorLocLeft.y < 25){
+				if (boardSquares[doorLocLeft.y][doorLocLeft.x] instanceof EmptySquare){
+					possibleMoves.put("Exit Room", new Location(doorLocLeft.x-1, doorLocLeft.y));
+				}
+			}
+			Point doorLocRight = new Point(player.getRoom().getDoors().get(0).getLocation().getXLoc()+1, player.getRoom().getDoors().get(0).getLocation().getYLoc());
+//			System.out.println(rightPoint);
+			if (doorLocRight.x > -1 && doorLocRight.x < 25 && doorLocRight.y > -1 && doorLocRight.y < 25){
+				if (boardSquares[doorLocRight.y][doorLocRight.x] instanceof EmptySquare){
+					possibleMoves.put("Exit Room", new Location(doorLocRight.x+1, doorLocRight.y));
+				}
+			}
 		}		
-		if (boardSquares[player.getLocation().getBoardCoOrd().y][player.getLocation().getBoardCoOrd().x-1] instanceof EmptySquare || 
-				boardSquares[player.getLocation().getBoardCoOrd().y][player.getLocation().getBoardCoOrd().x-1] instanceof Door ||
-				boardSquares[player.getLocation().getBoardCoOrd().y][player.getLocation().getBoardCoOrd().x-1] instanceof Room){
-			possibleMoves.put("Move Left", new Location(charMap.get(player.getLocation().getBoardCoOrd().x-1), player.getLocation().getBoardCoOrd().y));
-		}
-		if (boardSquares[player.getLocation().getBoardCoOrd().y][player.getLocation().getBoardCoOrd().x+1] instanceof EmptySquare || 
-				boardSquares[player.getLocation().getBoardCoOrd().y][player.getLocation().getBoardCoOrd().x+1] instanceof Door ||
-				boardSquares[player.getLocation().getBoardCoOrd().y][player.getLocation().getBoardCoOrd().x+1] instanceof Room){
-			possibleMoves.put("Move Right", new Location(charMap.get(player.getLocation().getBoardCoOrd().x+1), player.getLocation().getBoardCoOrd().y));
-		}
-
 		return possibleMoves;
 	}
 	
+	/**
+	 * @return list of rooms on the board
+	 */
 	public Room[] getRooms(){
 		return rooms;
 	}
 	
-	
-	
-//	public static void main(String[] args){
-//		Board board = new Board();
-//		System.out.println(board.otherString());
+//	public static void main(String args[]) {
+//		System.out.println();
+		
 //	}
-	
 	
 }

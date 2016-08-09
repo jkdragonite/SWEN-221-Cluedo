@@ -183,7 +183,7 @@ public class CluedoGameTests {
 		catch(GameError ge){
 			Location playerLoc = players.get(0).getLocation();
 			assertEquals(playerLoc.getXLoc(), 7);
-			assertEquals(playerLoc.getYLoc(), 25);
+			assertEquals(playerLoc.getYLoc(), 24);
 		}
 	}
 	
@@ -204,7 +204,7 @@ public class CluedoGameTests {
 		catch(GameError ge){
 			Location playerLoc = players.get(0).getLocation();
 			assertEquals(playerLoc.getXLoc(), 0);
-			assertEquals(playerLoc.getYLoc(), 25);
+			assertEquals(playerLoc.getYLoc(), 24);
 		}
 	}
 	
@@ -283,6 +283,9 @@ public class CluedoGameTests {
 	//test valid player move
 	//test moving into/through/out of rooms
 	//test invalid player move
+	
+
+	
 	
 	private GameOfCluedo initBasicGame(){
 		GameOfCluedo game= new GameOfCluedo();

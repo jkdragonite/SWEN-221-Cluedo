@@ -11,39 +11,39 @@ import java.util.Map;
  * @author Marielle Cheyne
  * @author Jordan Ching
  *
- */
+ */    
 
 public class Location {
-	private char xLoc;
+	private int xLoc;
 	private int yLoc;
 	
 	
-	public Location(char x, int y){
-		xLoc = Character.toLowerCase(x);
+	public Location(int x, int y){
+		xLoc = x;
 		yLoc = y;
 	}
 	
-	/**
-	 * This translates the alphanumerical location to a point usable by
-	 * the Board, using char to int ASCII conversion for the x co-ordinate
-	 * Calculates the appropriate x,y values for use with an array directly
-	 * (i.e. 1 becomes 0 so the correct array reference is found)
-	 * 
-	 * @return a Point usable directly with a 2D array
-	 */
-	public Point getBoardCoOrd(){
-		//ASCII values 97(a)-122(z)
-		//convert x to ASCII value
-		int x = ((int) xLoc) - 97;
-		return new Point(x, yLoc-1);
-	}
-	
+//	/**
+//	 * This translates the alphanumerical location to a point usable by
+//	 * the Board, using char to int ASCII conversion for the x co-ordinate
+//	 * Calculates the appropriate x,y values for use with an array directly
+//	 * (i.e. 1 becomes 0 so the correct array reference is found)
+//	 * 
+//	 * @return a Point usable directly with a 2D array
+//	 */
+//	public Point getBoardCoOrd(){
+//		//ASCII values 97(a)-122(z)
+//		//convert x to ASCII value
+//		int x = ((int) xLoc) - 97;
+//		return new Point(x, yLoc-1);
+//	}
+//	
 	public int getYLoc(){
 		return this.yLoc;
 	}
 
 	public int getXLoc(){
-		return getBoardCoOrd().x;
+		return this.xLoc;
 	}
 	
 	
@@ -51,7 +51,7 @@ public class Location {
 		this.yLoc = y;
 	}
 
-	void setXLoc(char x){
+	void setXLoc(int x){
 		this.xLoc = x;
 	}
 	

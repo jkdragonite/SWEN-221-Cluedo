@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
+
 import ui.Board;
 import ui.Room;
 import ui.TextClient;
@@ -179,7 +181,7 @@ public class GameOfCluedo {
 		if(!player.getRoom().getName().equalsIgnoreCase(room)){
 		throw new GameError("Player is not in the correct location (by room name): please move to the " + room + " to make this suggestion");
 	}
-		
+		player.getRoom().setWeapon(weapon);
 		//move relevant objects to the room
 		//board.move(String weapon, String room)
 		//board move searches the room 

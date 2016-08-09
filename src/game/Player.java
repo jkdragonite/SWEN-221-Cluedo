@@ -28,6 +28,8 @@ public class Player {
 	private Hand hand;
 	private boolean activePlayer;
 	private Room room;
+	private String boardString;
+	
 	
 	/**
 	 * 
@@ -41,6 +43,7 @@ public class Player {
 		this.location = getStartLocation(token);
 		this.room = null;
 		activePlayer = true;
+		setString();
 	}
 	
 	// get moves
@@ -69,6 +72,10 @@ public class Player {
 		return activePlayer;
 	}
 	
+	public String toString(){
+		return this.boardString;
+	}
+	
 	/**
 	 * Basic method used in construction of a character returning their 
 	 * set start location.
@@ -80,17 +87,17 @@ public class Player {
 	public Location getStartLocation(Token token){
 		switch(token){
 		case MissScarlett:
-			return new Location('h',25);
+			return new Location(7,24);
 		case ColonelMustard:
-			return new Location('a',18);
+			return new Location(0,17);
 		case ProfessorPlum:
-			return new Location('y',20);
+			return new Location(24,19);
 		case MrsWhite:
-			return new Location('j',1);
+			return new Location(9,0);
 		case ReverendGreen:
-			return new Location('p',1);
+			return new Location(15,0);
 		case MrsPeacock:
-			return new Location('y',7);
+			return new Location(24,6);
 		}
 		throw new IllegalArgumentException("Token " + token + " has no match");
 	}
@@ -109,6 +116,27 @@ public class Player {
 	
 	public void addToHand(Card card){
 		hand.addCard(card);
+	}
+	
+	public void setString(){
+		if (this.token == Token.MissScarlett){
+			this.boardString = "S";
+		}
+		if (this.token == Token.ColonelMustard){
+			this.boardString = "C";
+		}
+		if (this.token == Token.ProfessorPlum){
+			this.boardString = "P";
+		}
+		if (this.token == Token.MrsWhite){
+			this.boardString = "W";
+		}
+		if (this.token == Token.ReverendGreen){
+			this.boardString = "G";
+		}
+		if (this.token == Token.MrsPeacock){
+			this.boardString = "M";
+		}	
 	}
 	
 }
