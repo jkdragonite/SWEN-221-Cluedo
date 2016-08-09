@@ -281,7 +281,7 @@ public class CluedoGameTests {
 	}
 	
 	//test valid player move
-		//test moving into/through/out of rooms
+	//test moving into/through/out of rooms
 	//test invalid player move
 	
 	private GameOfCluedo initBasicGame(){

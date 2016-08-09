@@ -18,7 +18,7 @@ public class GameOfCluedo {
 	public boolean gameWon;
 	
 	private String characterKey = "Miss Scarlett: S | Colonel Mustard: C | Mrs. White: W | Reverend Green: G | Mrs. Peacock: M | Professor Plum: P";
-	private final String weaponKey = "Weapon Symbols || 'Y' : spanner | '8' : rope | 'F' : revolver | '/' : lead pipe | '!' : dagger | 'I' : candlestick";
+	private final String weaponKey = "Weapon Symbols: 'Y' : spanner | '8' : rope | 'F' : revolver | '/' : lead pipe | '!' : dagger | 'I' : candlestick";
 	
 	public enum Weapon{
 		Candlestick,
@@ -28,7 +28,9 @@ public class GameOfCluedo {
 		Rope,
 		Spanner
 	}
-	
+	/**
+	 * Creates a new GameOfCluedo instance with a board, empty player array, and a ui
+	 */
 	public GameOfCluedo(){
 		board = new Board();
 		players = new ArrayList<Player>();
@@ -37,7 +39,13 @@ public class GameOfCluedo {
 		ui = new TextClient();
 		gameWon = false;
 	}
-	
+	/**
+	 * Adds a given player to the game. Should be called after the GameOfCluedo instance is created and
+	 * before any other method calls are made.
+	 * Must be called for each player wishing to join the game.
+	 * @param player
+	 * @throws GameError
+	 */
 	public void addPlayer(Player player) throws GameError{
 		if(players.size() > 6){
 			throw new GameError("Cannot have more than 6 players");
@@ -45,6 +53,12 @@ public class GameOfCluedo {
 		players.add(player);
 	}
 	
+	/**
+	 * Returns the player associated with the number, e.g Player 1 returns players index 0.
+	 * @param playerNum
+	 * @return
+	 * @throws GameError
+	 */
 	public Player getPlayer(int playerNum) throws GameError{
 		if(playerNum > players.size()){
 			throw new GameError("Game only has " + players.size() + ". Invalid player number entered");
@@ -52,10 +66,18 @@ public class GameOfCluedo {
 		return players.get(playerNum -1);
 	}
 	
+	/**
+	 * Returns the complete list of all players in the current game instance
+	 * @return
+	 */
 	public List<Player> getPlayers(){
 		return this.players;
 	}
-	
+	/**
+	 * Shuffles and deals a deck of cards after they are created and the solution has been initialised.
+	 * When the amount of cards left is less than the amount of players the method deals to the 
+	 * final player first, and works its way backwards until it runs out of cards.
+	 */
 	public void dealCards(){
 		List<Card> deck = createDeck();
 		Collections.shuffle(deck);
@@ -73,7 +95,11 @@ public class GameOfCluedo {
 			}
 		}
 	}
-	
+	/**
+	 * Instantiates the complete deck of cards and creates the solution from them.
+	 * 
+	 * @returns the remaining cards after the solution has taken on of each type.
+	 */
 	public ArrayList<Card> createDeck(){
 		ArrayList<Card> characters = new ArrayList<Card>();
 		ArrayList<Card> rooms = new ArrayList<Card>();
@@ -106,6 +132,16 @@ public class GameOfCluedo {
 		return createSolution(characters, rooms, weapons);
 	}
 	
+	/**
+	 * Creates the solution for the game 
+	 * i.e selects the character, room and weapon which represent the murderer, murder weapon and location from
+	 * the complete deck of cards.
+	 * 
+	 * @param characters: a list of CharacterCards
+	 * @param rooms: a list of RoomCards
+	 * @param weapons: a list of WeaponCards
+	 * @returns the remaining cards to be dealt to players
+	 */
 	private ArrayList<Card> createSolution(List<Card> characters, List<Card> rooms, List<Card> weapons){
 		Collections.shuffle(characters);
 		solution.add(characters.remove(3));
@@ -124,6 +160,18 @@ public class GameOfCluedo {
 		return deck;
 	}
 	
+	/**
+	 * Contains the execution pattern and logic required to allow a player to make a suggestion.
+	 * Ensures that the player is in the room they want to use in the suggestion, throws an error if not.
+	 * Iterates through the rest of the players to refute the suggestion, and if this fails it calls 
+	 * makeAccusation, which may end the game if the player is correct.
+	 * 
+	 * @param player: current player making the suggestion
+	 * @param character name
+	 * @param room name
+	 * @param weapon type
+	 * @throws GameError
+	 */
 	public void makeSuggestion(Player player, String character, String room, String weapon) throws GameError{
 		if(!board.isInRoom(player.getLocation(), player)){
 			throw new GameError("Player is not in the correct location (by location): please move to the " + room + " to make this suggestion");
@@ -170,7 +218,15 @@ public class GameOfCluedo {
 			gameWon = makeAccusation(players.get(currentPlayer), character, room, weapon);
 		}
 	}
-	
+	/**
+	 * Contains all the game logic for allowing a different player to refute the current player's suggestion.
+	 * It ensures that the refuting player cannot see the current player's hand, and that the card chosen is
+	 * actually contained in their hand. 
+	 * 
+	 * @param refuteCards
+	 * @param firstRun
+	 * @returns the name of the card chosen
+	 */
 	public String getRefutation(Set<Card> refuteCards, boolean firstRun){
 		repaintUI(true);
 		if(!firstRun){
@@ -244,8 +300,10 @@ public class GameOfCluedo {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Generates the key which is printed with the board to the user, to make it easier for the player 
+	 * to visually identify where their and others' tokens are. 
+	 * Should only be called after all players have been added.
+	 * @returns the modified key string
 	 */
 	public String generateCharacterKey(){
 		char[] currentKey = characterKey.toCharArray();
@@ -283,6 +341,12 @@ public class GameOfCluedo {
 		return solution;
 	}
 	
+	/**
+	 * Checks for the number of players who are still flagged as active and returns it.
+	 * If there is only one player the gameWon boolean is set to true and the game should end.
+	 * 
+	 * @return num of active players remaining
+	 */
 	public int checkActivePlayers(){
 		int count = 0; 
 		for(Player p : players){
@@ -315,7 +379,6 @@ public class GameOfCluedo {
 	
 	/**
 	 * Indicates an attempted action is in error of game logic.
-	 *
 	 */
 	public static class GameError extends Exception {
 		public GameError(String msg) {
