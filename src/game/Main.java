@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.text.DefaultEditorKit.BeepAction;
+
 import game.GameOfCluedo.GameError;
 import game.Player.Token;
 import ui.Board;
@@ -26,7 +28,6 @@ public class Main {
 	public static void main(String args[]) throws GameError{
 		GameOfCluedo game = new GameOfCluedo();
 		Board board = new Board();
-		System.out.println(board.toString(game.getPlayers()));
 		TextClient textClient = new TextClient();
 		Boolean setup = true;
 		Boolean gameInProgress = false;
@@ -38,12 +39,6 @@ public class Main {
 					+ "\n 2) Start Game");
 			int setupChoice = textClient.getInt();
 			if (setupChoice == 1){
-				// player select string
-
-//				if (game.getPlayers().isEmpty()){
-//					textClient.println("There are currently no players in the game");
-//				}
-//				else{
 					String players = "";
 					for (Player player : game.getPlayers()){
 						players = players + player.getToken() + " ";
@@ -85,9 +80,12 @@ public class Main {
 				gameInProgress = true;
 			}
 		}
+		// loop continues if game is in progress, and not won
+		// cycles through players and presents each one with game options
 		while (gameInProgress && !game.gameWon){
 			System.out.println("Game in progress");
 			if(game.checkActivePlayers() == 1){
+				textClient.println("Game Won!");
 				game.gameWon = true;
 				gameInProgress = false;
 			}
@@ -100,6 +98,7 @@ public class Main {
 				if (player.isActive() == true){
 					Boolean playerTurnBoolean = true;
 					textClient.println("\nIt is now " + player.getToken() + "'s turn");
+					// loop continues until current player ends their turn
 					while (playerTurnBoolean){
 						Boolean hasMoved = false;
 						if (game.gameWon == true){
@@ -115,6 +114,7 @@ public class Main {
 						textClient.println("\n2) Make Accusation");
 						textClient.println("\n3) Make Suggestion");
 						textClient.println("\n4) End Turn");
+						textClient.println("\n5) Print Legend");
 						int userChoice = textClient.getInt();
 						if (userChoice == 1){
 							if (hasMoved == true){
@@ -122,6 +122,8 @@ public class Main {
 							}
 							int playerMoves = diceRoll;
 							hasMoved = true;
+							// if the player chooses to move, this loop will keep prompting them to select a direction to move in
+							// until they choose to end their move, or their moves are depleted
 							while (playerMoves > 0){
 								textClient.println("\nYou have " + playerMoves +" moves left");
 								Map<String, Location> moves = board.getMoves(player);
@@ -138,7 +140,7 @@ public class Main {
 									playerMovesString = playerMovesString + "\n"+ i + ")" + temp.get(i);
 								}
 								playerMovesString = playerMovesString + "\n"+ temp.size() + ")" + "End Movement";
-								System.out.println(playerMovesString);
+								textClient.println(playerMovesString);
 								int userMoveChoice = textClient.getInt();
 								// broken
 								if (userMoveChoice == temp.size()){
@@ -147,20 +149,14 @@ public class Main {
 								else {
 									String chosenActionString = temp.get(userMoveChoice);
 									Location newLocation = moves.get(chosenActionString);
-									// will be wrong because of loc retrieval
 									board.movePlayer(player, newLocation.getXLoc(), newLocation.getYLoc());
 									playerMoves = playerMoves -1;
 									textClient.println(board.toString(game.getPlayers()));
-	//								textClient.println(board.cleanString());
 								}
-								// check rooms to see if player location new is in rroom, if so, add to room
-								// pair each move with a location, build player moves as an hashmap, string equivalent then location or room
-								// print movement options
-								// move player based on iput
-								// subtract from player moves
 								
 							}
 						}
+						// allows the player to make an accusation if they thing they can win the game
 						else if (userChoice == 2){
 							textClient.println("\nYou have chosen to make an accusation");
 							textClient.println("\nPlease type a character");
@@ -174,6 +170,7 @@ public class Main {
 								// player has won game if accusation true
 								game.gameWon = true;
 								playerTurnBoolean = false;
+								break;
 							}
 							else{
 								// player is removed from game for incorrect accusation
@@ -181,7 +178,7 @@ public class Main {
 								playerTurnBoolean = false;
 							}
 						}
-						
+						// allows the player to make a suggestion if they are in the correct room
 						else if (userChoice == 3){
 							textClient.println("\nYou have chosen to make a suggestion");
 							textClient.println("\nPlease type a character");
@@ -196,12 +193,20 @@ public class Main {
 							catch(GameError ge){
 								textClient.println("Player turn over");
 								playerTurnBoolean = false;
+								break;
 							}
 						}
+						// allows the player to end their turn
 						else if (textClient.getInt() == 4){
 							playerTurnBoolean = false;
-							break;
-						
+							break;	
+						}
+						// prints key for symbols and room locations
+						else if (textClient.getInt() == 5){
+							textClient.println("\n"+game.getCharacterString());
+							textClient.println("\n"+game.getWeaponString());
+							textClient.println("\nd = Door, s = Stairs, r = Room, x = non playable square, . = empty square");
+							textClient.println("\nKitchen at D:3, Ball Room at M:3. Conservatory at W:3, Dining Room at D:12, Billiard Room at W:10, Library at W:16, Lounge at D:21, Hall at M:21, Study at W:22");
 						}
 						else{
 							throw new GameError("Invalid selection, please a number corresponding to a game move");
@@ -213,17 +218,6 @@ public class Main {
 					}
 				}
 			}
-			
-			
-			// loop through players in order, get first player
-			
-			// logic to decide each player's available moves, start with dice roll
-			
-			// track number, loop for movement, present move in four cardinal directions if possible so long as player has moves left
-			
-			// test for special squares, present these options too			
-			
-			// player stuff
 		}
 	}
 }	

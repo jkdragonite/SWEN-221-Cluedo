@@ -11,6 +11,16 @@ import com.sun.xml.internal.fastinfoset.util.CharArray;
 import game.Location;
 import game.Player;
 
+/**
+ * 
+ * The board comprising of instances of the square class. Hard coded emptysquare instances because we had issues with eclipse.
+ * This is a 25 by 25 grid made up of a mix of empty squares, roomsquares, stair squares, door squares, and non-playable squares, which each have differnt
+ * attributes used to dictate player interaction and movement.
+ * 
+ * @author Jordan
+ * @author Marielle
+ *
+ */
 public class Board {
 	
 	private char[][] currentBoardArray;
@@ -71,10 +81,10 @@ public class Board {
 
 	
 	  
-	// using characters just to get started, will change to square instances later
 	public Board(){
 		
 		cleanBoard = new char[][]{
+				// a character representation of the array, used to reset board positions
 				{'x','x','x','x','x','x','x','x','x','`','x','x','x','x','x','`','x','x','x','x','x','x','x','x','x'},
 				{'r','r','r','r','r','s','.','.','.','.','r','r','r','r','r','.','.','.','.','r','r','r','r','r','r'},
 				{'r','r','r','r','r','r','.','.','r','r','r','r','r','r','r','r','r','.','.','r','r','r','r','r','r'},
@@ -103,7 +113,7 @@ public class Board {
 		};	
 		
 
-		
+		// a character representation of the current board state, to make printing easier
 		currentBoardArray = new char[][]{
 				{'x','x','x','x','x','x','x','x','x','`','x','x','x','x','x','`','x','x','x','x','x','x','x','x','x'},
 				{'r','r','r','r','r','s','.','.','.','.','r','r','r','r','r','.','.','.','.','r','r','r','r','r','r'},
@@ -207,28 +217,42 @@ public class Board {
 		
 		
 		boardSquares[19][6] = new Door(lounge, new Location(6,19));
-		diningRoom.addDoor((Door) boardSquares[19][6]);
+		lounge.addDoor((Door) boardSquares[19][6]);
 
 		boardSquares[5][8] = new Door(ballRoom, new Location(8,5));
+		ballRoom.addDoor((Door) boardSquares[5][8]);
 		boardSquares[7][9] = new Door(ballRoom, new Location(9,7));
+		ballRoom.addDoor((Door) boardSquares[7][9]);
 		boardSquares[5][16] = new Door(ballRoom, new Location(16,5));
+		ballRoom.addDoor((Door) boardSquares[5][16]);
 		boardSquares[7][15] = new Door(ballRoom, new Location(15,7));
+		ballRoom.addDoor((Door) boardSquares[7][15]);
 		
 		boardSquares[4][19] = new Door(conservatory, new Location(19,4));
+		conservatory.addDoor((Door) boardSquares[4][19]);
 		
 		boardSquares[18][11] = new Door(hall, new Location(11,18));
+		hall.addDoor((Door) boardSquares[18][11]);
 		boardSquares[18][12] = new Door(hall, new Location(12,18));
+		hall.addDoor((Door) boardSquares[18][12]);
 		boardSquares[18][13] = new Door(hall, new Location(13,18));
+		hall.addDoor((Door) boardSquares[18][13]);
 		boardSquares[20][15] = new Door(hall, new Location(15,20));
+		hall.addDoor((Door) boardSquares[20][15]);
 		
 		boardSquares[21][18] = new Door(study, new Location(18,21));
+		study.addDoor((Door) boardSquares[21][18]);
 		
 		boardSquares[16][18] = new Door(library, new Location(18,16));
+		library.addDoor((Door) boardSquares[16][18]);
 		boardSquares[14][22] = new Door(library, new Location(22,14));
+		library.addDoor((Door) boardSquares[14][22]);
 
 		
 		boardSquares[9][19] = new Door(billiardRoom, new Location(19,9));
+		billiardRoom.addDoor((Door) boardSquares[9][19]);
 		boardSquares[12][23] = new Door(billiardRoom, new Location(23,12));
+		billiardRoom.addDoor((Door) boardSquares[12][23]);
 			
 
 	}
@@ -312,10 +336,19 @@ public class Board {
 				}
 			}
 		}
-		
-		for (char[] x : this.currentBoardArray){             
+		boardState = boardState +"    A B C D E F G H I J K L M N O P Q R S T U V W X Y ";
+		int i = 0;
+		for (char[] x : this.currentBoardArray){
 			// finally, builds the string for the board
-			boardState = boardState+"\n";
+			String spaceString = "";
+			if (i < 10){
+				spaceString = "  ";
+			}
+			else {
+				spaceString = " ";
+			}
+			boardState = boardState+"\n"+ i + spaceString;
+			i = i + 1;
 			boardState = boardState + '|';
 			for (char y : x){
 
@@ -421,7 +454,7 @@ public class Board {
 		Point upPoint = new Point(player.getLocation().getXLoc(), player.getLocation().getYLoc()-1);
 //		System.out.println("up"+upPoint);
 		if (upPoint.x > -1 && upPoint.x < 25 && upPoint.y > -1 && upPoint.y < 25){
-			if (boardSquares[upPoint.y][upPoint.x] instanceof EmptySquare || 
+			if (boardSquares[upPoint.y][upPoint.x] instanceof EmptySquare && boardSquares[upPoint.y][upPoint.x].getPlayer() == null || 
 					boardSquares[upPoint.y][upPoint.x] instanceof Door){
 				possibleMoves.put("Move Up", new Location(upPoint.x, upPoint.y));
 			}			
@@ -429,7 +462,7 @@ public class Board {
 		Point downPoint = new Point(player.getLocation().getXLoc(), player.getLocation().getYLoc()+1);
 //		System.out.println("down"+downPoint);
 		if (downPoint.x > -1 && downPoint.x < 25 && downPoint.y > -1 && downPoint.y < 25){
-			if (boardSquares[downPoint.y][downPoint.x] instanceof EmptySquare || 
+			if (boardSquares[downPoint.y][downPoint.x] instanceof EmptySquare && boardSquares[downPoint.y][downPoint.x].getPlayer() == null || 
 					boardSquares[downPoint.y][downPoint.x] instanceof Door){
 				possibleMoves.put("Move Down", new Location(player.getLocation().getXLoc(), player.getLocation().getYLoc()+1));
 			}	
@@ -437,7 +470,7 @@ public class Board {
 		Point leftPoint = new Point(player.getLocation().getXLoc()-1, player.getLocation().getYLoc());
 //		System.out.println("left"+leftPoint);
 		if (leftPoint.x > -1 && leftPoint.x < 25 && leftPoint.y > -1 && leftPoint.y < 25){
-			if (boardSquares[leftPoint.y][leftPoint.x] instanceof EmptySquare || 
+			if (boardSquares[leftPoint.y][leftPoint.x] instanceof EmptySquare && boardSquares[leftPoint.y][leftPoint.x].getPlayer() == null || 
 				boardSquares[leftPoint.y][leftPoint.x] instanceof Door){
 				possibleMoves.put("Move Left", new Location(player.getLocation().getXLoc()-1, player.getLocation().getYLoc()));
 			}
@@ -445,7 +478,7 @@ public class Board {
 		Point rightPoint = new Point(player.getLocation().getXLoc()+1, player.getLocation().getYLoc());
 //		System.out.println(rightPoint);
 		if (rightPoint.x > -1 && rightPoint.x < 25 && rightPoint.y > -1 && rightPoint.y < 25){
-			if (boardSquares[rightPoint.y][rightPoint.x] instanceof EmptySquare || 
+			if (boardSquares[rightPoint.y][rightPoint.x] instanceof EmptySquare && boardSquares[rightPoint.y][rightPoint.x].getPlayer() == null || 
 					boardSquares[rightPoint.y][rightPoint.x] instanceof Door){
 				possibleMoves.put("Move Right", new Location(player.getLocation().getXLoc()+1, player.getLocation().getYLoc()));
 			}
@@ -480,7 +513,13 @@ public class Board {
 					possibleMoves.put("Exit Room", new Location(doorLocRight.x+1, doorLocRight.y));
 				}
 			}
-		}		
+		}
+		if (player.getRoom() != null && player.getRoom().getStairs() != null){
+			// method to add stairs to player move options
+			int x = player.getRoom().getDoors().get(0).getLocation().getXLoc();
+			int y = player.getRoom().getDoors().get(0).getLocation().getYLoc();
+			possibleMoves.put("Take Stairs to " + player.getRoom().getStairs().getDestination().getName(), new Location(x, y));
+		}
 		return possibleMoves;
 	}
 	
@@ -490,10 +529,5 @@ public class Board {
 	public Room[] getRooms(){
 		return rooms;
 	}
-	
-//	public static void main(String args[]) {
-//		System.out.println();
-		
-//	}
 	
 }

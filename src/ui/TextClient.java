@@ -9,9 +9,15 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * 
+ * Helper class to handle input and output
+ * 
+ * @author Jordan
+ * @author Marielle
+ */
 public class TextClient {
-	//wanted to make TextClient a UI of sorts which manages ONLY input and output, 
-	//and validation of inputs when requested by the game class.
+
 	public Scanner in;
 	public PrintStream out;
 	
@@ -129,38 +135,4 @@ public class TextClient {
 			out.println();
 		}
 	}
-	
-	
-
-	/*public static void main(String args[]){
-		Board board = new Board();
-		boolean start = true;
-		boolean gameInProgress = true;
-		
-		while (gameInProgress == true){
-
-			Scanner in = new Scanner(System.in);			
-						
-			if (start){
-				System.out.println("Welcome to Cluedo");
-				System.out.println("Please select and action");
-				System.out.println("1) Show Board");
-				System.out.println("2) Move Player");
-				System.out.println("3) Close Game");
-				start = false;
-			}
-			
-			int num = in.nextInt();
-			
-			if (num == 1){
-				System.out.println(board.toString());
-			}
-			
-			if (num == 3){
-				gameInProgress = false;
-				in.close();
-			}
-			
-		}
-	}*/
 }

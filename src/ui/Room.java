@@ -8,6 +8,12 @@ import game.Location;
 import game.Player;
 
 
+/**
+ * A room instance, can hold multiple players and is used to make suggestions for the game 
+ * 
+ * @author Jordan
+ * @author Marielle
+ */
 public class Room extends Square {
 	// mucking about with square ideas
 	

@@ -2,8 +2,15 @@ package ui;
 
 import game.Player;
 
+/**
+ * A class representing an empty square
+ * 
+ * @author Jordan
+ * @author Marielle
+ *
+ */
 public class EmptySquare extends Square{
-	// player occupying square, to help check movement legality
+	
 	private Player playerOnSquare = null;
 	
 	public Player getPlayer(){

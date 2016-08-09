@@ -3,6 +3,13 @@ package ui;
 import game.Location;
 import game.Player;
 
+/**
+ * A square which represents a door, connected to a room, and can contain a player. Has a location corresponding to board
+ * 
+ * @author Jordan
+ * @author Marielle
+ *
+ */
 public class Door extends EmptySquare {
 	private Room room;
 	private Player playerOnSquare;
@@ -20,7 +27,7 @@ public class Door extends EmptySquare {
 	}
 	
 	/**
-	 * @return door's locatin
+	 * @return door's location
 	 */
 	public Location getLocation(){
 		return this.location;

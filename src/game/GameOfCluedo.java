@@ -379,6 +379,14 @@ public class GameOfCluedo {
 		return board.getRooms();
 	}
 	
+	public String getCharacterString(){
+		return this.characterKey;
+	}
+	
+	public String getWeaponString(){
+		return this.weaponKey;
+	}
+	
 	/**
 	 * Indicates an attempted action is in error of game logic.
 	 */

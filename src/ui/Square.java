@@ -2,6 +2,12 @@ package ui;
 
 import game.Player;
 
+/**
+ * Basis for the squares used for the boards
+ * 
+ * @author Jordan
+ * @author Marielle
+ */
 public abstract class Square {
 	Player playerOnSquare = null;
 	public String toString() {
